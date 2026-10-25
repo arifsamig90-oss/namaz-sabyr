@@ -317,7 +317,33 @@
     clearTimeout(scheduleTimer);
     scheduleTimer = setTimeout(function () {
       try { Native.setEvents(JSON.stringify(events())); } catch (e) { if (window.console) console.error(e); }
+      try { if (Native.setWidgetData) Native.setWidgetData(JSON.stringify(widgetData())); } catch (e) { if (window.console) console.error(e); }
     }, 300);
+  }
+
+  /* для виджетов Android: расписание на 40 дней вперёд (обновляется при каждом открытии) */
+  function widgetData() {
+    var out = { city: cfg.location.cityName || '', mosque: cfg.mosque.name || '', days: [] };
+    var n = now();
+    for (var i = -1; i < 40; i++) {
+      var date = PT.addDays(n, i);
+      var day = Sched.buildDay(cfg, date);
+      if (!day || !day.ok) continue;
+      var f = prayerOf(day, 'fajr');
+      out.days.push({
+        d: PT.dateKey(date),
+        w: WEEKDAYS[date.getDay()] + ', ' + date.getDate() + ' ' + MONTHS[date.getMonth()],
+        h: cfg.display.showHijri ? PT.hijriText(date, cfg.calc.hijriOffset) : '',
+        r: day.read && !day.readHidden ? day.read.getTime() : 0,
+        p: ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'].map(function (id) {
+          var p = prayerOf(day, id);
+          var iq = p && p.iqama ? p.iqama.getTime() : 0;
+          return [id, NAMES[id], p && p.adhan ? p.adhan.getTime() : 0, iq];
+        }),
+        fr: day.fajrByRead && f && f.iqama ? 1 : 0
+      });
+    }
+    return out;
   }
 
   /* ---------- напоминания через Календарь (веб-версия, iPhone) ---------- */

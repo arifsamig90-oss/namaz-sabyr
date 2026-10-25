@@ -407,3 +407,9 @@ html.ios .ph-tabs {
 html.ios .ph-tab { font-size: 10px; font-weight: 500; gap: 1px; }
 html.ios .ph-tab .ic { width: 25px; height: 25px; }
 a.ph-btn { display: inline-block; text-decoration: none; text-align: center; }
+
+/* месяц: пятница — полосой на всю строку (подложка и золотая черта слева), сегодня — ярче */
+.ph-month tr.fri td { background: color-mix(in srgb, var(--gold) 11%, transparent); }
+.ph-month tr.fri td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
+.ph-month tr.today td { background: color-mix(in srgb, var(--gold) 24%, transparent); }
+html.ios .ph-month tr.fri td { background: color-mix(in srgb, var(--gold) 11%, transparent); }
