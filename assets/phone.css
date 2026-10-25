@@ -14,6 +14,12 @@
   --red: #e0362c;
   --next-bg: #fbf7ec;
   --next-ink: #0b1533;
+  --next-sub: #3a4566;
+  --next-ar: #a57d1c;
+  --glow: #1b2f72;
+  --on-gold: #1b1606;
+  --switch-off: #3a4566;
+  --tabs-bg: rgba(7, 16, 41, .94);
   --tabs-h: 64px;
   --safe-b: env(safe-area-inset-bottom, 0px);
   color-scheme: dark;
@@ -33,7 +39,7 @@ body {
 .ph-bg {
   position: fixed; inset: 0; z-index: -1;
   background:
-    radial-gradient(120% 60% at 50% -10%, #1b2f72 0%, transparent 60%),
+    radial-gradient(120% 60% at 50% -10%, var(--glow) 0%, transparent 60%),
     linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%);
 }
 button { font: inherit; color: inherit; }
@@ -104,9 +110,9 @@ button { font: inherit; color: inherit; }
 .ph-row.read .ph-row-time { color: var(--gold); }
 .ph-row.past { opacity: .55; }
 .ph-row.next { background: var(--next-bg); color: var(--next-ink); border-color: var(--next-bg); opacity: 1; }
-.ph-row.next .ph-row-sub, .ph-row.next .ph-row-sub .iq { color: #3a4566; }
+.ph-row.next .ph-row-sub, .ph-row.next .ph-row-sub .iq { color: var(--next-sub); }
 .ph-row.next .ph-row-name, .ph-row.next .ph-row-time { color: var(--next-ink); }
-.ph-row.next .ar { color: #a57d1c; }
+.ph-row.next .ar { color: var(--next-ar); }
 
 /* карточки */
 .ph-card {
@@ -145,7 +151,7 @@ button { font: inherit; color: inherit; }
 .ph-set.off .ph-set-opts { display: none; }
 .ph-switch { position: relative; width: 50px; height: 30px; flex: none; }
 .ph-switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
-.ph-switch span { position: absolute; inset: 0; border-radius: 30px; background: #3a4566; transition: background .2s; }
+.ph-switch span { position: absolute; inset: 0; border-radius: 30px; background: var(--switch-off); transition: background .2s; }
 .ph-switch span::after {
   content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px;
   border-radius: 50%; background: #fff; transition: transform .2s;
@@ -170,7 +176,7 @@ button { font: inherit; color: inherit; }
 .ph-btns { display: flex; flex-wrap: wrap; gap: 8px; }
 .ph-btn {
   border: 0; border-radius: 12px; padding: 10px 14px; cursor: pointer;
-  background: var(--gold); color: #1b1606; font-weight: 700;
+  background: var(--gold); color: var(--on-gold); font-weight: 700;
 }
 .ph-btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--card-border); }
 .ph-btn.small { padding: 7px 11px; font-size: 14px; white-space: nowrap; }
@@ -179,7 +185,7 @@ button { font: inherit; color: inherit; }
 .ph-tabs {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
   display: flex; height: calc(var(--tabs-h) + var(--safe-b)); padding-bottom: var(--safe-b);
-  background: rgba(7, 16, 41, .94); border-top: 1px solid var(--card-border);
+  background: var(--tabs-bg); border-top: 1px solid var(--card-border);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .ph-tab {
@@ -206,13 +212,8 @@ button { font: inherit; color: inherit; }
   --next-ink: #ffffff;
   color-scheme: light;
 }
-:root[data-theme="light"] .ph-bg { background: linear-gradient(180deg, #fffaf0 0%, var(--bg) 60%); }
-:root[data-theme="light"] .ph-tabs { background: rgba(255, 255, 255, .94); }
-:root[data-theme="light"] .ph-row.next .ph-row-sub,
-:root[data-theme="light"] .ph-row.next .ph-row-sub .iq { color: #c9d1ea; }
-:root[data-theme="light"] .ph-row.next .ar { color: var(--gold); }
+:root[data-theme="light"] .ph-bg { background: radial-gradient(120% 50% at 50% -10%, var(--glow), transparent 65%), var(--bg); }
 :root[data-theme="light"] .ph-month th { background: var(--bg); }
-:root[data-theme="light"] .ph-switch span { background: #c3c9d9; }
 
 /* ---------- поля настроек ---------- */
 .ph-small { color: var(--muted); font-size: 13px; }
@@ -229,7 +230,7 @@ button { font: inherit; color: inherit; }
 .ph-seg { display: flex; margin-top: 6px; border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; }
 .ph-seg button { flex: 1; padding: 10px 6px; border: 0; background: transparent; cursor: pointer; font-size: 14px; }
 .ph-seg button + button { border-left: 1px solid var(--card-border); }
-.ph-seg button.on { background: var(--gold); color: #1b1606; font-weight: 700; }
+.ph-seg button.on { background: var(--gold); color: var(--on-gold); font-weight: 700; }
 .ph-swatches { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
 .ph-swatches button {
   width: 38px; height: 38px; border-radius: 50%; border: 3px solid transparent; cursor: pointer;
@@ -387,7 +388,7 @@ html.ios .ph-seg { border: 0; border-radius: 9px; padding: 2px; background: colo
 html.ios .ph-seg button { border-radius: 7px; font-size: 13px; padding: 7px 4px; }
 html.ios .ph-seg button + button { border-left: 0; }
 html.ios .ph-seg button.on { background: var(--bg-2); color: var(--text); box-shadow: 0 1px 4px rgba(0, 0, 0, .25); font-weight: 600; }
-html.ios .ph-switch span { background: color-mix(in srgb, var(--text) 18%, transparent); }
+html.ios .ph-switch span { background: var(--switch-off); }
 html.ios .ph-switch input:checked + span { background: #34c759; }
 html.ios .ph-city { border-bottom: .5px solid var(--hair); }
 html.ios .ph-month td { border-top: .5px solid var(--hair); }
@@ -400,7 +401,7 @@ html.ios .ph-qibla-deg { font-size: 44px; font-weight: 200; letter-spacing: -.02
 
 /* панель вкладок — полупрозрачная, с размытием */
 html.ios .ph-tabs {
-  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  background: color-mix(in srgb, var(--bg) 74%, transparent);
   backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px);
   border-top: .5px solid var(--hair);
 }
@@ -413,3 +414,20 @@ a.ph-btn { display: inline-block; text-decoration: none; text-align: center; }
 .ph-month tr.fri td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
 .ph-month tr.today td { background: color-mix(in srgb, var(--gold) 24%, transparent); }
 html.ios .ph-month tr.fri td { background: color-mix(in srgb, var(--gold) 11%, transparent); }
+
+/* ---------- выбор темы ---------- */
+.ph-themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; margin-top: 8px; }
+.ph-theme {
+  position: relative; padding: 0; border: 2px solid transparent; border-radius: 14px; overflow: hidden;
+  cursor: pointer; background: none; text-align: left;
+}
+.ph-theme.on { border-color: var(--gold); }
+.ph-theme .sw { display: block; height: 54px; position: relative; }
+.ph-theme .sw i { position: absolute; left: 10px; right: 10px; height: 6px; border-radius: 3px; }
+.ph-theme .sw i:nth-child(1) { top: 14px; width: 40%; }
+.ph-theme .sw i:nth-child(2) { top: 26px; right: 30%; opacity: .55; }
+.ph-theme .sw i:nth-child(3) { top: 38px; right: 45%; opacity: .55; }
+.ph-theme .nm { display: block; padding: 6px 8px; font-size: 12px; font-weight: 600; background: var(--card); color: var(--text); }
+/* светлые темы: красный икамы — насыщенный, чтобы читался на светлом фоне */
+:root[data-theme="light"] .ph-hero.iqama .ph-hero-label,
+:root[data-theme="light"] .ph-hero.iqama .ph-hero-count b { color: #b3261e; }

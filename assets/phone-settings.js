@@ -37,35 +37,79 @@
 
   /* ================= оформление (только телефон) ================= */
   var UKEY = 'namazPhone.ui.v1';
+  /* Темы. Контраст проверен по WCAG: основной текст ≥ 14:1, второстепенный и акцент ≥ 5.7:1.
+     t — фон, b2 — фон полей, x — текст, m — второстепенный текст, a — акцент, g — свечение сверху. */
+  var THEMES = [
+    { id: 'night',    name: 'Ночь',            dark: true,  t: '#05070f', b2: '#11141f', x: '#f5f3ee', m: '#8e93a6', a: '#e3bd62', g: 'rgba(227,189,98,.16)', card: .055 },
+    { id: 'mosque',   name: 'Мечеть',          dark: true,  t: '#071029', b2: '#0b1a45', x: '#f4f1e8', m: '#a9b2cc', a: '#e3bd62', g: '#1b2f72' },
+    { id: 'emerald',  name: 'Изумруд',         dark: true,  t: '#031510', b2: '#0b2e23', x: '#f1f5ef', m: '#9fb8ac', a: '#e0bb63', g: '#145c45' },
+    { id: 'indigo',   name: 'Индиго',          dark: true,  t: '#0a0920', b2: '#1b1852', x: '#f3f2fb', m: '#a7a6cf', a: '#e6c27a', g: '#2d2a8a' },
+    { id: 'darkgold', name: 'Тёмное золото',   dark: true,  t: '#0f0b05', b2: '#261c0c', x: '#f7eedb', m: '#b8a98a', a: '#eac36b', g: 'rgba(234,195,107,.24)' },
+    { id: 'graphite', name: 'Графит',          dark: true,  t: '#101113', b2: '#1d1f24', x: '#f2f2f3', m: '#a0a3ab', a: '#e3bd62', g: '#2a2d35' },
+    { id: 'burgundy', name: 'Бордо',           dark: true,  t: '#14060a', b2: '#33101a', x: '#f8eeee', m: '#c2a4a9', a: '#ebbf74', g: '#5a1a2a' },
+    { id: 'ivory',    name: 'Слоновая кость',  dark: false, t: '#f7f3ea', b2: '#ffffff', x: '#14161c', m: '#555a66', a: '#7d5a0f', g: 'rgba(125,90,15,.10)' },
+    { id: 'white',    name: 'Белая',           dark: false, t: '#f2f2f7', b2: '#ffffff', x: '#111216', m: '#55565e', a: '#0b3d91', g: 'rgba(11,61,145,.08)' },
+    { id: 'mint',     name: 'Мята',            dark: false, t: '#ecf5f0', b2: '#ffffff', x: '#0e1d16', m: '#46584f', a: '#0a6047', g: 'rgba(10,96,71,.10)' },
+    { id: 'sky',      name: 'Небо',            dark: false, t: '#edf2fa', b2: '#ffffff', x: '#0d1830', m: '#46526b', a: '#1a46b8', g: 'rgba(26,70,184,.10)' }
+  ];
   var ACCENTS = [
     { id: 'gold', c: '#e3bd62' }, { id: 'emerald', c: '#2fbf8f' }, { id: 'teal', c: '#2ab7c9' },
     { id: 'sky', c: '#4aa3ff' }, { id: 'violet', c: '#a78bfa' }, { id: 'rose', c: '#f07193' }, { id: 'amber', c: '#f59e0b' }
   ];
+  var IOS = document.documentElement.classList.contains('ios');
+  function theme(id) { return THEMES.filter(function (t) { return t.id === id; })[0]; }
   function loadUi() {
     var u = null;
     try { u = JSON.parse(localStorage.getItem(UKEY) || 'null'); } catch (e) { u = null; }
     u = u || {};
+    var dark = theme(u.dark), light = theme(u.light);
     return {
-      theme: ['auto', 'dark', 'light'].indexOf(u.theme) !== -1 ? u.theme
-        : (document.documentElement.classList.contains('ios') ? 'auto' : 'dark'),
-      accent: ACCENTS.some(function (a) { return a.id === u.accent; }) ? u.accent : 'gold',
+      theme: ['auto', 'dark', 'light'].indexOf(u.theme) !== -1 ? u.theme : (IOS ? 'auto' : 'dark'),
+      dark: dark && dark.dark ? dark.id : (IOS ? 'night' : 'mosque'),
+      light: light && !light.dark ? light.id : 'ivory',
+      /* 'theme' — цвет акцента из темы; раньше по умолчанию было золото — это то же самое */
+      accent: u.accent && u.accent !== 'gold' && ACCENTS.some(function (a) { return a.id === u.accent; }) ? u.accent : 'theme',
       size: [1, 1.12, 1.25].indexOf(+u.size) !== -1 ? +u.size : 1
     };
   }
   var ui = loadUi();
   var darkMq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function current() {
+    var mode = ui.theme === 'auto' ? (darkMq && !darkMq.matches ? 'light' : 'dark') : ui.theme;
+    return theme(mode === 'light' ? ui.light : ui.dark);
+  }
   function applyUi() {
-    var theme = ui.theme === 'auto' ? (darkMq && !darkMq.matches ? 'light' : 'dark') : ui.theme;
-    var root = document.documentElement;
-    root.dataset.theme = theme;
-    var acc = ACCENTS.filter(function (a) { return a.id === ui.accent; })[0] || ACCENTS[0];
-    /* на светлом фоне светлое золото не читается — берём тот же цвет темнее */
-    var c = theme === 'light' ? darker(acc.c, 0.68) : acc.c;
-    root.style.setProperty('--gold', c);
-    root.style.setProperty('--gold-soft', hexA(c, 0.14));
+    var t = current(), root = document.documentElement, st = root.style;
+    root.dataset.theme = t.dark ? 'dark' : 'light';
+    root.dataset.pal = t.id;
+    var acc = t.a;
+    if (ui.accent !== 'theme') {
+      var pick = ACCENTS.filter(function (a) { return a.id === ui.accent; })[0];
+      /* на светлом фоне светлый акцент не читается — берём тот же цвет темнее */
+      if (pick) acc = t.dark ? pick.c : darker(pick.c, 0.62);
+    }
+    var vars = t.dark ? {
+      '--bg': t.t, '--bg-2': t.b2, '--card': 'rgba(255,255,255,' + (t.card || .06) + ')',
+      '--card-border': 'rgba(255,255,255,.10)', '--hair': 'rgba(255,255,255,.10)',
+      '--next-bg': '#fbf7ec', '--next-ink': '#0b1533', '--next-sub': '#3a4566', '--next-ar': darker(acc, 0.72),
+      '--on-gold': '#1b1606', '--switch-off': 'rgba(255,255,255,.22)'
+    } : {
+      '--bg': t.t, '--bg-2': t.b2, '--card': '#ffffff',
+      '--card-border': 'rgba(0,0,0,.09)', '--hair': 'rgba(0,0,0,.12)',
+      '--next-bg': t.x, '--next-ink': '#ffffff', '--next-sub': 'rgba(255,255,255,.78)', '--next-ar': '#f0d28a',
+      '--on-gold': '#ffffff', '--switch-off': 'rgba(0,0,0,.2)'
+    };
+    vars['--text'] = t.x;
+    vars['--muted'] = t.m;
+    vars['--gold'] = acc;
+    vars['--gold-soft'] = hexA(acc, t.dark ? 0.16 : 0.12);
+    vars['--glow'] = t.g;
+    vars['--tabs-bg'] = hexA(t.t, 0.94);
+    for (var k in vars) st.setProperty(k, vars[k]);
+    st.colorScheme = t.dark ? 'dark' : 'light';
     document.body.style.zoom = ui.size === 1 ? '' : String(ui.size);
     var meta = document.querySelector('meta[name=theme-color]');
-    if (meta) meta.setAttribute('content', theme === 'light' ? '#f6f2e8' : '#0b1533');
+    if (meta) meta.setAttribute('content', t.t);
   }
   function hexA(hex, a) {
     var n = parseInt(hex.slice(1), 16);
@@ -81,21 +125,45 @@
     applyUi();
     renderUi();
   }
-  if (darkMq && darkMq.addEventListener) darkMq.addEventListener('change', function () { if (ui.theme === 'auto') applyUi(); });
+  if (darkMq && darkMq.addEventListener) darkMq.addEventListener('change', function () { if (ui.theme === 'auto') { applyUi(); renderUi(); } });
 
   function setSeg(id, value) {
     var b = $(id).querySelectorAll('button');
     for (var i = 0; i < b.length; i++) b[i].classList.toggle('on', b[i].dataset.v === String(value));
   }
+  /* плитка темы — маленькое превью: фон, акцентная полоска и строки текста */
+  function tile(t, on) {
+    return '<button type="button" class="ph-theme' + (on ? ' on' : '') + '" data-v="' + t.id + '" aria-label="' + t.name + '">' +
+      '<span class="sw" style="background:radial-gradient(120% 70% at 50% -20%,' + t.g + ',transparent 70%),' + t.t + '">' +
+      '<i style="background:' + t.a + '"></i><i style="background:' + t.x + '"></i><i style="background:' + t.m + '"></i></span>' +
+      '<span class="nm">' + t.name + '</span></button>';
+  }
   function renderUi() {
     setSeg('themeSeg', ui.theme);
     setSeg('sizeSeg', ui.size);
-    $('accentSeg').innerHTML = ACCENTS.map(function (a) {
-      return '<button type="button" data-v="' + a.id + '" class="' + (a.id === ui.accent ? 'on' : '') +
-        '" style="background:' + a.c + '" aria-label="' + a.id + '"></button>';
-    }).join('');
+    $('darkThemes').innerHTML = THEMES.filter(function (t) { return t.dark; }).map(function (t) { return tile(t, t.id === ui.dark); }).join('');
+    $('lightThemes').innerHTML = THEMES.filter(function (t) { return !t.dark; }).map(function (t) { return tile(t, t.id === ui.light); }).join('');
+    var th = current();
+    $('accentSeg').innerHTML = '<button type="button" data-v="theme" class="' + (ui.accent === 'theme' ? 'on' : '') +
+      '" style="background:' + th.a + '" aria-label="Как в теме" title="Как в теме"></button>' +
+      ACCENTS.map(function (a) {
+        return '<button type="button" data-v="' + a.id + '" class="' + (a.id === ui.accent ? 'on' : '') +
+          '" style="background:' + (th.dark ? a.c : darker(a.c, 0.62)) + '" aria-label="' + a.id + '"></button>';
+      }).join('');
   }
   $('themeSeg').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { ui.theme = b.dataset.v; saveUi(); } });
+  $('darkThemes').addEventListener('click', function (e) {
+    var b = e.target.closest('.ph-theme'); if (!b) return;
+    ui.dark = b.dataset.v;
+    if (ui.theme === 'light') ui.theme = 'dark'; // выбрали тёмную — показываем её
+    saveUi();
+  });
+  $('lightThemes').addEventListener('click', function (e) {
+    var b = e.target.closest('.ph-theme'); if (!b) return;
+    ui.light = b.dataset.v;
+    if (ui.theme === 'dark') ui.theme = 'light';
+    saveUi();
+  });
   $('sizeSeg').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { ui.size = +b.dataset.v; saveUi(); } });
   $('accentSeg').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { ui.accent = b.dataset.v; saveUi(); } });
 
