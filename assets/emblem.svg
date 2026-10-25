@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- упрощённый значок: синий полумесяц с золотым орнаментом, мечеть и тюльпан -->
+  <defs>
+    <mask id="cr"><rect width="200" height="200" fill="#fff"/><circle cx="84" cy="88" r="66" fill="#000"/></mask>
+  </defs>
+  <g mask="url(#cr)">
+    <circle cx="100" cy="104" r="80" fill="#0b1533" stroke="#d6b15e" stroke-width="4"/>
+    <g fill="none" stroke="#d6b15e" stroke-width="2">
+      <path d="M150 64c7 6 10 12 10 17a10 10 0 0 1-20 0c0-5 3-11 10-17z"/>
+      <path d="M164 112c7 6 10 12 10 17a10 10 0 0 1-20 0c0-5 3-11 10-17z"/>
+      <path d="M128 152c7 6 10 12 10 17a10 10 0 0 1-20 0c0-5 3-11 10-17z"/>
+      <path d="M80 166c7 6 10 12 10 17a10 10 0 0 1-20 0c0-5 3-11 10-17z"/>
+      <circle cx="166" cy="92" r="3"/><circle cx="150" cy="140" r="3"/><circle cx="102" cy="168" r="3"/>
+    </g>
+  </g>
+  <circle cx="84" cy="88" r="66" fill="none" stroke="#d6b15e" stroke-width="3" stroke-dasharray="0" mask="url(#cr)"/>
+  <!-- мечеть -->
+  <g transform="translate(46 64)">
+    <path d="M30 6l3 18h-6z" fill="#8a96a8"/>
+    <rect x="25" y="24" width="10" height="16" fill="#9a6a33"/>
+    <path d="M6 52l26-16 26 16z" fill="#3c9b55"/>
+    <rect x="8" y="52" width="48" height="40" fill="#a8743a"/>
+    <path d="M44 40l14 12H30z" fill="#3c9b55"/>
+    <g fill="#f4efe1"><rect x="14" y="60" width="6" height="10" rx="3"/><rect x="26" y="60" width="6" height="10" rx="3"/><rect x="46" y="58" width="5" height="26" rx="2.5" fill="#8fe0d8"/></g>
+    <rect x="0" y="90" width="66" height="5" fill="#4f9a3a"/>
+  </g>
+  <!-- тюльпан -->
+  <path d="M22 30c8 0 14 5 18 13-1-9 1-16 5-21 3 5 5 12 3 21 4-8 10-12 18-12 0 15-8 25-22 25S22 45 22 30z" fill="#e0362c" transform="rotate(-25 44 40)"/>
+</svg>

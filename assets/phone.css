@@ -1,0 +1,408 @@
+/*!
+ * phone.css — приложение «Намаз» для телефона (phone.html).
+ * Цвета — как у табло мечети: тёмно‑синий, золото, красная икама.
+ */
+:root {
+  --bg: #071029;
+  --bg-2: #0b1a45;
+  --card: rgba(255, 255, 255, .06);
+  --card-border: rgba(255, 255, 255, .10);
+  --text: #f4f1e8;
+  --muted: #a9b2cc;
+  --gold: #e3bd62;
+  --gold-soft: rgba(227, 189, 98, .16);
+  --red: #e0362c;
+  --next-bg: #fbf7ec;
+  --next-ink: #0b1533;
+  --tabs-h: 64px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: 0 16px calc(var(--tabs-h) + var(--safe-b) + 20px);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+.ph-bg {
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(120% 60% at 50% -10%, #1b2f72 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%);
+}
+button { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+.ar { font-family: "Noto Naskh Arabic", "Geeza Pro", serif; color: var(--gold); font-weight: 400; margin-left: .3em; }
+
+/* шапка */
+.ph-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: calc(env(safe-area-inset-top, 0px) + 18px) 0 14px;
+}
+.ph-logo {
+  width: 52px; height: 52px; flex: none; border-radius: 50%;
+  display: grid; place-items: center; font-size: 30px; overflow: hidden;
+  background: var(--gold-soft);
+}
+.ph-logo img { width: 100%; height: 100%; object-fit: cover; }
+.ph-brand h1 { margin: 0; font-size: 21px; font-weight: 700; letter-spacing: .01em; }
+.ph-sub { color: var(--muted); font-size: 14px; }
+
+/* следующий намаз */
+.ph-hero {
+  text-align: center; padding: 18px 16px 20px; border-radius: 22px;
+  background: linear-gradient(160deg, var(--gold-soft), transparent 140%), var(--card);
+  border: 1px solid var(--gold);
+}
+.ph-hero-label { color: var(--gold); font-size: 13px; text-transform: uppercase; letter-spacing: .12em; }
+.ph-hero-name { font-size: 30px; font-weight: 800; margin-top: 2px; }
+.ph-hero-time { font-size: 64px; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.ph-hero-count { color: var(--muted); font-size: 17px; margin-top: 4px; }
+.ph-hero-count b { color: var(--text); font-variant-numeric: tabular-nums; font-size: 22px; }
+.ph-hero-note { color: var(--muted); font-size: 14px; margin-top: 6px; min-height: 1em; }
+.ph-hero.iqama { background: linear-gradient(160deg, rgba(224, 54, 44, .30), rgba(224, 54, 44, .08)); border-color: rgba(224, 54, 44, .55); }
+.ph-hero.iqama .ph-hero-label { color: #ff8a80; }
+
+/* выбор дня */
+.ph-day { display: flex; align-items: center; gap: 8px; margin: 18px 0 10px; }
+.ph-day-text { flex: 1; text-align: center; }
+.ph-day-g { font-weight: 700; font-size: 17px; }
+.ph-day-h { color: var(--gold); font-size: 14px; }
+.ph-arrow {
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--card-border);
+  background: var(--card); font-size: 26px; line-height: 1; cursor: pointer;
+}
+.ph-today-btn {
+  display: block; margin: -2px auto 10px; border: 0; background: none;
+  color: var(--gold); text-decoration: underline; font-size: 14px; cursor: pointer;
+}
+
+/* список намазов */
+.ph-list { display: flex; flex-direction: column; gap: 8px; }
+.ph-row {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 12px;
+  padding: 12px 16px; border-radius: 16px;
+  background: var(--card); border: 1px solid var(--card-border);
+}
+.ph-row-name { font-size: 18px; font-weight: 700; }
+.ph-row-name .ar { font-size: 15px; }
+.ph-row-time { font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+.ph-row-sub { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 14px; }
+.ph-row-sub .iq { color: var(--text); }
+.ph-row-sub .iq b { font-variant-numeric: tabular-nums; }
+.ph-row.minor { padding-top: 9px; padding-bottom: 9px; }
+.ph-row.minor .ph-row-name { font-size: 16px; font-weight: 600; color: var(--muted); }
+.ph-row.minor .ph-row-time { font-size: 20px; color: var(--muted); }
+.ph-row.read { border-color: var(--gold); background: var(--gold-soft); }
+.ph-row.read .ph-row-name { color: var(--gold); }
+.ph-row.read .ph-row-time { color: var(--gold); }
+.ph-row.past { opacity: .55; }
+.ph-row.next { background: var(--next-bg); color: var(--next-ink); border-color: var(--next-bg); opacity: 1; }
+.ph-row.next .ph-row-sub, .ph-row.next .ph-row-sub .iq { color: #3a4566; }
+.ph-row.next .ph-row-name, .ph-row.next .ph-row-time { color: var(--next-ink); }
+.ph-row.next .ar { color: #a57d1c; }
+
+/* карточки */
+.ph-card {
+  margin-top: 14px; padding: 14px 16px; border-radius: 18px;
+  background: var(--card); border: 1px solid var(--card-border);
+}
+.ph-card-title { font-weight: 700; font-size: 17px; margin-bottom: 8px; }
+.ph-jumuah { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.ph-jumuah div { color: var(--muted); }
+.ph-jumuah b { color: var(--text); font-size: 22px; font-variant-numeric: tabular-nums; margin-left: 6px; }
+.ph-text { margin: 0 0 8px; color: var(--muted); }
+.ph-hint { color: var(--muted); font-size: 13px; margin: 10px 2px 0; }
+
+/* месяц */
+.ph-month-wrap { overflow-x: auto; margin: 0 -10px; }
+.ph-month { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 13px; letter-spacing: -.02em; }
+.ph-month th { color: var(--gold); font-weight: 600; font-size: 11px; padding: 6px 1px; text-align: center; position: sticky; top: 0; background: var(--bg); }
+.ph-month td { padding: 7px 1px; text-align: center; border-top: 1px solid var(--card-border); white-space: nowrap; }
+.ph-month td:first-child { text-align: left; color: var(--muted); padding-left: 4px; }
+.ph-month td:first-child small { font-size: 10px; margin-left: 2px; }
+.ph-month tr.fri td:first-child { color: var(--gold); font-weight: 700; }
+.ph-month tr.today td { background: var(--gold-soft); color: var(--text); font-weight: 700; }
+
+/* уведомления */
+.ph-rows { display: flex; flex-direction: column; }
+.ph-set { padding: 12px 0; border-top: 1px solid var(--card-border); }
+.ph-set:first-child { border-top: 0; }
+.ph-set-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ph-set-name { font-weight: 700; }
+.ph-set-opts { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 8px; color: var(--muted); font-size: 14px; }
+.ph-set-opts label { display: inline-flex; align-items: center; gap: 6px; }
+.ph-set-opts select {
+  background: var(--bg-2); color: var(--text); border: 1px solid var(--card-border);
+  border-radius: 10px; padding: 6px 8px; font: inherit;
+}
+.ph-set.off .ph-set-opts { display: none; }
+.ph-switch { position: relative; width: 50px; height: 30px; flex: none; }
+.ph-switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
+.ph-switch span { position: absolute; inset: 0; border-radius: 30px; background: #3a4566; transition: background .2s; }
+.ph-switch span::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px;
+  border-radius: 50%; background: #fff; transition: transform .2s;
+}
+.ph-switch input:checked + span { background: var(--gold); }
+.ph-switch input:checked + span::after { transform: translateX(20px); }
+.ph-check { width: 20px; height: 20px; accent-color: var(--gold); }
+
+.ph-perm {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 12px; margin-bottom: 8px; border-radius: 12px;
+  background: rgba(224, 54, 44, .15); border: 1px solid rgba(224, 54, 44, .4); font-size: 14px;
+}
+.ph-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.ph-choice {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px;
+  border: 1px solid var(--card-border); cursor: pointer;
+}
+.ph-choice input { width: 20px; height: 20px; margin: 0; accent-color: var(--gold); flex: none; }
+.ph-choice small { display: block; color: var(--muted); font-size: 12px; }
+.ph-choice:has(input:checked) { border-color: var(--gold); background: var(--gold-soft); }
+.ph-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.ph-btn {
+  border: 0; border-radius: 12px; padding: 10px 14px; cursor: pointer;
+  background: var(--gold); color: #1b1606; font-weight: 700;
+}
+.ph-btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--card-border); }
+.ph-btn.small { padding: 7px 11px; font-size: 14px; white-space: nowrap; }
+
+/* нижние вкладки */
+.ph-tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+  display: flex; height: calc(var(--tabs-h) + var(--safe-b)); padding-bottom: var(--safe-b);
+  background: rgba(7, 16, 41, .94); border-top: 1px solid var(--card-border);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.ph-tab {
+  flex: 1; border: 0; background: none; color: var(--muted); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px;
+}
+.ph-tab span { font-size: 22px; filter: grayscale(1); opacity: .7; }
+.ph-tab.on { color: var(--gold); }
+.ph-tab.on span { filter: none; opacity: 1; }
+
+@media (min-width: 600px) {
+  body { max-width: 560px; margin: 0 auto; }
+}
+
+/* ---------- светлая тема ---------- */
+:root[data-theme="light"] {
+  --bg: #f6f2e8;
+  --bg-2: #ffffff;
+  --card: rgba(11, 21, 51, .045);
+  --card-border: rgba(11, 21, 51, .12);
+  --text: #14203f;
+  --muted: #5d6784;
+  --next-bg: #0b1a45;
+  --next-ink: #ffffff;
+  color-scheme: light;
+}
+:root[data-theme="light"] .ph-bg { background: linear-gradient(180deg, #fffaf0 0%, var(--bg) 60%); }
+:root[data-theme="light"] .ph-tabs { background: rgba(255, 255, 255, .94); }
+:root[data-theme="light"] .ph-row.next .ph-row-sub,
+:root[data-theme="light"] .ph-row.next .ph-row-sub .iq { color: #c9d1ea; }
+:root[data-theme="light"] .ph-row.next .ar { color: var(--gold); }
+:root[data-theme="light"] .ph-month th { background: var(--bg); }
+:root[data-theme="light"] .ph-switch span { background: #c3c9d9; }
+
+/* ---------- поля настроек ---------- */
+.ph-small { color: var(--muted); font-size: 13px; }
+.ph-field { display: block; margin: 12px 0 6px; color: var(--muted); font-size: 14px; }
+.ph-input {
+  display: block; width: 100%; margin-top: 6px; padding: 10px 12px; border-radius: 12px;
+  background: var(--bg-2); color: var(--text); border: 1px solid var(--card-border); font: inherit; font-size: 16px;
+}
+.ph-input:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+.ph-line {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 0; border-top: 1px solid var(--card-border);
+}
+.ph-seg { display: flex; margin-top: 6px; border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; }
+.ph-seg button { flex: 1; padding: 10px 6px; border: 0; background: transparent; cursor: pointer; font-size: 14px; }
+.ph-seg button + button { border-left: 1px solid var(--card-border); }
+.ph-seg button.on { background: var(--gold); color: #1b1606; font-weight: 700; }
+.ph-swatches { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.ph-swatches button {
+  width: 38px; height: 38px; border-radius: 50%; border: 3px solid transparent; cursor: pointer;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .25);
+}
+.ph-swatches button.on { border-color: var(--text); }
+.ph-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; margin: 8px 0; }
+.ph-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 10px; margin: 8px 0; }
+.ph-grid2 label, .ph-grid3 label { color: var(--muted); font-size: 13px; }
+.ph-details { margin-top: 10px; }
+.ph-details summary { cursor: pointer; color: var(--gold); padding: 6px 0; }
+.ph-citylist { max-height: 300px; overflow-y: auto; margin-top: 6px; }
+.ph-city {
+  display: flex; justify-content: space-between; gap: 8px; width: 100%; text-align: left;
+  padding: 11px 10px; border: 0; border-bottom: 1px solid var(--card-border); background: none; cursor: pointer;
+}
+.ph-city small { color: var(--muted); }
+.ph-city.on { color: var(--gold); font-weight: 700; }
+.ph-jrow { display: grid; grid-template-columns: 1fr 110px 40px; gap: 8px; align-items: end; margin: 6px 0; }
+.ph-jrow .ph-input { margin-top: 0; }
+.ph-x { height: 44px; border-radius: 12px; border: 1px solid var(--card-border); background: none; cursor: pointer; font-size: 18px; }
+
+/* ---------- кибла ---------- */
+.ph-qibla { text-align: center; }
+.ph-compass { position: relative; width: min(78vw, 300px); aspect-ratio: 1; margin: 12px auto 8px; }
+.ph-dial {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle, var(--bg-2) 0 58%, var(--card) 59%);
+  border: 2px solid var(--card-border); transition: transform .15s linear;
+}
+.ph-dial span { position: absolute; font-weight: 800; color: var(--muted); }
+.ph-dial .n { top: 8px; left: 50%; transform: translateX(-50%); color: var(--red); }
+.ph-dial .s { bottom: 8px; left: 50%; transform: translateX(-50%); }
+.ph-dial .e { right: 10px; top: 50%; transform: translateY(-50%); }
+.ph-dial .w { left: 10px; top: 50%; transform: translateY(-50%); }
+.ph-kaaba-arrow { position: absolute; inset: 0; }
+.ph-kaaba-arrow::before {
+  content: ""; position: absolute; left: 50%; top: 14%; bottom: 50%; width: 6px; margin-left: -3px;
+  border-radius: 3px; background: var(--gold);
+}
+.ph-kaaba-arrow span { position: absolute; left: 50%; top: 3%; transform: translateX(-50%); font-size: 30px; }
+.ph-needle {
+  position: absolute; left: 50%; top: -6px; width: 0; height: 0; margin-left: -10px;
+  border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid var(--text);
+}
+.ph-compass.aligned .ph-dial { border-color: var(--gold); box-shadow: 0 0 0 6px var(--gold-soft); }
+.ph-qibla-deg { font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.ph-tabs .ph-tab { font-size: 11px; }
+
+/* ---------- значки вкладок (линейные) ---------- */
+.ph-tab .ic { display: block; width: 26px; height: 26px; filter: none; opacity: 1; }
+.ph-tab .ic svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* =====================================================================
+   iPhone: утончённое оформление (html.ios)
+   Шрифт San Francisco, тонкие цифры, сгруппированные списки как в iOS,
+   полупрозрачная панель вкладок. Логика та же — меняется только вид.
+   ===================================================================== */
+html.ios {
+  --bg: #05070f;
+  --bg-2: #11141f;
+  --card: rgba(255, 255, 255, .055);
+  --card-border: rgba(255, 255, 255, .08);
+  --muted: #8e93a6;
+  --text: #f5f3ee;
+  --hair: rgba(255, 255, 255, .1);
+  --tabs-h: 54px;
+}
+html.ios[data-theme="light"] {
+  --bg: #f2f2f7;
+  --bg-2: #ffffff;
+  --card: #ffffff;
+  --card-border: rgba(60, 60, 67, .12);
+  --muted: #6e6e78;
+  --text: #111216;
+  --hair: rgba(60, 60, 67, .16);
+}
+html.ios body {
+  font-family: -apple-system, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  letter-spacing: -.01em;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+html.ios .ph-bg {
+  background:
+    radial-gradient(90% 40% at 50% -8%, color-mix(in srgb, var(--gold) 16%, transparent), transparent 70%),
+    var(--bg);
+}
+html.ios[data-theme="light"] .ph-bg { background: var(--bg); }
+
+/* шапка — тише и меньше */
+html.ios .ph-head { padding-top: calc(env(safe-area-inset-top, 0px) + 10px); gap: 10px; }
+html.ios .ph-logo { width: 34px; height: 34px; font-size: 20px; }
+html.ios .ph-brand h1 { font-size: 15px; font-weight: 600; letter-spacing: 0; }
+html.ios .ph-sub { font-size: 12px; }
+
+/* главное — следующий намаз, без рамки, тонкие крупные цифры */
+html.ios .ph-hero { background: none; border: 0; padding: 18px 0 8px; }
+html.ios .ph-hero.iqama { background: none; }
+html.ios .ph-hero-label { font-size: 11px; font-weight: 600; letter-spacing: .18em; }
+html.ios .ph-hero-name { font-size: 22px; font-weight: 600; margin-top: 6px; letter-spacing: 0; }
+html.ios .ph-hero-time {
+  font-family: -apple-system, "SF Pro Display", system-ui, sans-serif;
+  font-size: 88px; font-weight: 200; letter-spacing: -.04em; line-height: 1; margin-top: 2px;
+}
+html.ios .ph-hero-count { font-size: 15px; margin-top: 8px; }
+html.ios .ph-hero-count b { color: var(--gold); font-size: 17px; font-weight: 500; }
+html.ios .ph-hero.iqama .ph-hero-count b { color: #ff6b5e; }
+html.ios .ph-hero-note { font-size: 13px; }
+
+/* выбор дня */
+html.ios .ph-day { margin: 14px 0 8px; }
+html.ios .ph-day-g { font-size: 15px; font-weight: 600; }
+html.ios .ph-day-h { font-size: 13px; }
+html.ios .ph-arrow { width: 34px; height: 34px; font-size: 20px; background: var(--card); border: 0; }
+html.ios .ph-today-btn { text-decoration: none; font-size: 13px; }
+
+/* список намазов — одна сгруппированная карточка с тонкими разделителями */
+html.ios .ph-list { gap: 0; background: var(--card); border-radius: 14px; overflow: hidden; }
+html.ios .ph-row {
+  border: 0; border-radius: 0; background: none; padding: 13px 16px; position: relative;
+}
+html.ios .ph-row + .ph-row::before {
+  content: ""; position: absolute; top: 0; left: 16px; right: 0; height: .5px; background: var(--hair);
+}
+html.ios .ph-row-name { font-size: 17px; font-weight: 500; }
+html.ios .ph-row-name .ar { font-size: 14px; opacity: .8; }
+html.ios .ph-row-time { font-size: 22px; font-weight: 300; letter-spacing: -.01em; }
+html.ios .ph-row-sub { font-size: 13px; }
+html.ios .ph-row.minor { padding-top: 10px; padding-bottom: 10px; }
+html.ios .ph-row.minor .ph-row-name { font-size: 15px; font-weight: 400; }
+html.ios .ph-row.minor .ph-row-time { font-size: 17px; }
+html.ios .ph-row.read { background: none; }
+html.ios .ph-row.past { opacity: .45; }
+/* ближайший — золотая метка слева, без белой плитки */
+html.ios .ph-row.next { background: color-mix(in srgb, var(--gold) 10%, transparent); color: var(--text); }
+html.ios .ph-row.next::after {
+  content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--gold);
+}
+html.ios .ph-row.next .ph-row-name, html.ios .ph-row.next .ph-row-time { color: var(--gold); }
+html.ios .ph-row.next .ph-row-sub, html.ios .ph-row.next .ph-row-sub .iq { color: var(--muted); }
+html.ios .ph-row.next .ar { color: var(--gold); }
+
+/* карточки настроек — как сгруппированные списки iOS */
+html.ios .ph-card { border: 0; border-radius: 14px; padding: 14px 16px; margin-top: 22px; }
+html.ios .ph-card-title {
+  font-size: 13px; font-weight: 400; text-transform: uppercase; letter-spacing: .04em; color: var(--muted);
+  margin: -2px 0 10px;
+}
+html.ios .ph-line { border-top: .5px solid var(--hair); padding: 11px 0; font-size: 16px; }
+html.ios .ph-input { border-radius: 10px; border: 0; background: color-mix(in srgb, var(--text) 7%, transparent); }
+html.ios .ph-btn { border-radius: 12px; font-weight: 600; font-size: 15px; }
+html.ios .ph-seg { border: 0; border-radius: 9px; padding: 2px; background: color-mix(in srgb, var(--text) 9%, transparent); }
+html.ios .ph-seg button { border-radius: 7px; font-size: 13px; padding: 7px 4px; }
+html.ios .ph-seg button + button { border-left: 0; }
+html.ios .ph-seg button.on { background: var(--bg-2); color: var(--text); box-shadow: 0 1px 4px rgba(0, 0, 0, .25); font-weight: 600; }
+html.ios .ph-switch span { background: color-mix(in srgb, var(--text) 18%, transparent); }
+html.ios .ph-switch input:checked + span { background: #34c759; }
+html.ios .ph-city { border-bottom: .5px solid var(--hair); }
+html.ios .ph-month td { border-top: .5px solid var(--hair); }
+html.ios .ph-month th { background: var(--bg); }
+
+/* кибла */
+html.ios .ph-qibla { background: none; }
+html.ios .ph-dial { background: radial-gradient(circle, var(--bg-2) 0 58%, var(--card) 59%); border: 1px solid var(--hair); }
+html.ios .ph-qibla-deg { font-size: 44px; font-weight: 200; letter-spacing: -.02em; }
+
+/* панель вкладок — полупрозрачная, с размытием */
+html.ios .ph-tabs {
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px);
+  border-top: .5px solid var(--hair);
+}
+html.ios .ph-tab { font-size: 10px; font-weight: 500; gap: 1px; }
+html.ios .ph-tab .ic { width: 25px; height: 25px; }

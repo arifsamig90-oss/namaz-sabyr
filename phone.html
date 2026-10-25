@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Намаз «Сабыр»</title>
+<meta name="description" content="Время намаза для прихожан: следующий намаз с отсчётом, расписание на день и месяц, уведомления и азан.">
+<meta name="theme-color" content="#0b1533">
+<link rel="icon" href="assets/icon-192.png">
+<link rel="manifest" href="phone.webmanifest">
+<!-- iPhone: «На экран Домой» — открывается как приложение, без строки Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Намаз">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<script>
+  /* платформа — до отрисовки, чтобы оформление iPhone не «мигало» */
+  (function (d) {
+    var ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    if (ios || /[?&]ios\b/.test(location.search)) d.classList.add('ios');
+    if (window.navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches)) d.classList.add('standalone');
+  })(document.documentElement);
+</script>
+<link rel="stylesheet" href="assets/phone.css?v=20261025">
+</head>
+<body>
+  <div class="ph-bg" aria-hidden="true"></div>
+
+  <header class="ph-head">
+    <div class="ph-logo" id="logo" aria-hidden="true">🕌</div>
+    <div class="ph-brand">
+      <h1 id="mosqueName">Мечеть</h1>
+      <div class="ph-sub" id="mosqueSub"></div>
+    </div>
+  </header>
+
+  <!-- Сегодня -->
+  <main class="ph-view" id="viewToday">
+    <section class="ph-hero" id="hero">
+      <div class="ph-hero-label" id="nextLabel">Следующий намаз</div>
+      <div class="ph-hero-name" id="nextName">—</div>
+      <div class="ph-hero-time" id="nextTime">--:--</div>
+      <div class="ph-hero-count">через <b id="nextCount">--:--</b></div>
+      <div class="ph-hero-note" id="nextNote"></div>
+    </section>
+
+    <nav class="ph-day" aria-label="День">
+      <button type="button" class="ph-arrow" id="dayPrev" aria-label="Предыдущий день">‹</button>
+      <div class="ph-day-text">
+        <div class="ph-day-g" id="gDate">—</div>
+        <div class="ph-day-h" id="hDate"></div>
+      </div>
+      <button type="button" class="ph-arrow" id="dayNext" aria-label="Следующий день">›</button>
+    </nav>
+    <button type="button" class="ph-today-btn" id="dayToday" hidden>Вернуться к сегодня</button>
+
+    <section class="ph-list" id="list" aria-label="Время намаза"></section>
+
+    <section class="ph-card" id="jumuahCard" hidden>
+      <div class="ph-card-title">Джума <span class="ar">الجمعة</span></div>
+      <div class="ph-jumuah" id="jumuahList"></div>
+    </section>
+  </main>
+
+  <!-- Месяц -->
+  <main class="ph-view" id="viewMonth" hidden>
+    <nav class="ph-day" aria-label="Месяц">
+      <button type="button" class="ph-arrow" id="monPrev" aria-label="Предыдущий месяц">‹</button>
+      <div class="ph-day-text"><div class="ph-day-g" id="monTitle">—</div></div>
+      <button type="button" class="ph-arrow" id="monNext" aria-label="Следующий месяц">›</button>
+    </nav>
+    <div class="ph-month-wrap">
+      <table class="ph-month" id="monthTable"></table>
+    </div>
+    <p class="ph-hint">Ч — «Читается в мечетях». Время азана; икама — на вкладке «Сегодня».</p>
+  </main>
+
+  <!-- Уведомления -->
+  <main class="ph-view" id="viewNotify" hidden>
+    <section class="ph-card" id="nativeOnly">
+      <div class="ph-card-title">Уведомления и азан</div>
+      <div id="permBox"></div>
+      <div class="ph-rows" id="notifyRows"></div>
+    </section>
+
+    <section class="ph-card" id="soundCard">
+      <div class="ph-card-title">Звук азана</div>
+      <div class="ph-choices" id="adhanList" role="radiogroup" aria-label="Азан"></div>
+      <div class="ph-btns">
+        <button type="button" class="ph-btn" id="testAdhan">▶ Послушать</button>
+        <button type="button" class="ph-btn ghost" id="stopAdhan">■ Стоп</button>
+        <button type="button" class="ph-btn ghost" id="pickAdhan">Свой файл…</button>
+      </div>
+      <p class="ph-hint">Свой файл — любой аудиофайл с телефона (mp3, m4a, ogg). Азан звучит для намазов, где включено «азан со звуком»; остановить — кнопкой «Стоп» в уведомлении. В беззвучном режиме азан не играет.</p>
+    </section>
+
+    <section class="ph-card">
+      <div class="ph-card-title">О расписании</div>
+      <p class="ph-text" id="aboutText"></p>
+      <p class="ph-hint" id="credits" hidden></p>
+    </section>
+  </main>
+
+  <!-- Кибла -->
+  <main class="ph-view" id="viewQibla" hidden>
+    <section class="ph-card ph-qibla">
+      <div class="ph-card-title">Направление на Киблу</div>
+      <div class="ph-compass" id="compass" aria-hidden="true">
+        <div class="ph-dial" id="dial">
+          <span class="n">С</span><span class="e">В</span><span class="s">Ю</span><span class="w">З</span>
+          <div class="ph-kaaba-arrow" id="kaabaArrow"><span>🕋</span></div>
+        </div>
+        <div class="ph-needle"></div>
+      </div>
+      <div class="ph-qibla-deg" id="qiblaDeg">—</div>
+      <button type="button" class="ph-btn" id="compassBtn" hidden>Включить компас</button>
+      <p class="ph-text" id="qiblaText"></p>
+      <p class="ph-hint" id="qiblaHint">Держите телефон горизонтально, экраном вверх. Если стрелка «плывёт» — опишите телефоном восьмёрку в воздухе, чтобы откалибровать компас, и держитесь подальше от металла и магнитов.</p>
+    </section>
+  </main>
+
+  <!-- Настройки -->
+  <main class="ph-view" id="viewSettings" hidden>
+    <section class="ph-card">
+      <div class="ph-card-title">Город</div>
+      <p class="ph-text"><b id="curCity">—</b><br><span id="curCoords" class="ph-small"></span></p>
+      <div class="ph-btns">
+        <button type="button" class="ph-btn" id="gpsBtn">📍 Определить по GPS</button>
+      </div>
+      <p class="ph-hint" id="gpsStatus"></p>
+      <p class="ph-hint">Время показывается по часам телефона — выбирайте город, в котором вы находитесь.</p>
+      <input type="search" class="ph-input" id="citySearch" placeholder="Найти город…" autocomplete="off">
+      <div class="ph-citylist" id="cityList"></div>
+      <details class="ph-details">
+        <summary>Свои координаты</summary>
+        <div class="ph-grid2">
+          <label>Название<input class="ph-input" id="cName" maxlength="80"></label>
+          <span></span>
+          <label>Широта<input class="ph-input" id="cLat" type="number" step="0.0001" min="-90" max="90"></label>
+          <label>Долгота<input class="ph-input" id="cLng" type="number" step="0.0001" min="-180" max="180"></label>
+        </div>
+        <button type="button" class="ph-btn small" id="cApply">Применить</button>
+      </details>
+      <label class="ph-line" id="tyumenLine" hidden><span>Официальное тюменское расписание (ДУМ ТО)</span>
+        <span class="ph-switch"><input type="checkbox" id="tyumenData"><span></span></span></label>
+    </section>
+
+    <section class="ph-card">
+      <div class="ph-card-title">Расчёт времени</div>
+      <label class="ph-field">Метод расчёта<select class="ph-input" id="method"></select></label>
+      <p class="ph-hint" id="methodHint"></p>
+      <div class="ph-field">Аср
+        <div class="ph-seg" id="asrSeg">
+          <button type="button" data-v="hanafi">Ханафи</button>
+          <button type="button" data-v="standard">Шафии</button>
+        </div>
+      </div>
+      <p class="ph-hint">Ханафи — тень вдвое длиннее предмета; Шафии (также Малики, Ханбали) — тень равна предмету.</p>
+      <label class="ph-field">Высокие широты (короткие летние ночи)<select class="ph-input" id="highLats">
+        <option value="angle">По углу сумерек</option>
+        <option value="midNight">Середина ночи</option>
+        <option value="seventh">Одна седьмая ночи</option>
+        <option value="none">Без поправки</option>
+      </select></label>
+      <details class="ph-details">
+        <summary>Поправки к времени, мин</summary>
+        <div class="ph-grid3" id="adjGrid"></div>
+      </details>
+      <label class="ph-field">Дата по хиджре, поправка в днях<select class="ph-input" id="hijriOff">
+        <option value="-2">−2</option><option value="-1">−1</option><option value="0">0</option>
+        <option value="1">+1</option><option value="2">+2</option>
+      </select></label>
+    </section>
+
+    <section class="ph-card">
+      <div class="ph-card-title">Мечеть, икама и джума</div>
+      <label class="ph-field">Название мечети<input class="ph-input" id="mName" maxlength="120"></label>
+      <div class="ph-field">Икама — через сколько минут после азана</div>
+      <div class="ph-grid3" id="iqGrid"></div>
+      <label class="ph-line"><span>Показывать джуму</span>
+        <span class="ph-switch"><input type="checkbox" id="jOn"><span></span></span></label>
+      <div id="jList"></div>
+      <button type="button" class="ph-btn small ghost" id="jAdd">+ Добавить хутбу</button>
+    </section>
+
+    <section class="ph-card">
+      <div class="ph-card-title">«Читается в мечетях»</div>
+      <p class="ph-hint">Так принято в мечетях Тюмени: время утреннего чтения (по умолчанию — за 90 минут до восхода). Азан Фаджра никогда не ставится раньше начала Фаджра.</p>
+      <label class="ph-line"><span>Показывать</span>
+        <span class="ph-switch"><input type="checkbox" id="rShow"><span></span></span></label>
+      <div id="rBox">
+        <label class="ph-field">Как считать<select class="ph-input" id="rMode">
+          <option value="sunrise">Восход минус N минут</option>
+          <option value="suhoor">Сухур (Фаджр) плюс N минут</option>
+          <option value="fixed">Фиксированное время</option>
+        </select></label>
+        <label class="ph-field" id="rNBox">N, минут<input class="ph-input" id="rN" type="number" min="1" max="240"></label>
+        <label class="ph-field" id="rFixedBox">Время<input class="ph-input" id="rFixed" type="time"></label>
+        <label class="ph-line"><span>Азан Фаджра в мечети — в это время</span>
+          <span class="ph-switch"><input type="checkbox" id="rByRead"><span></span></span></label>
+        <label class="ph-field">Икама Фаджра после него, мин<input class="ph-input" id="rIq" type="number" min="1" max="60"></label>
+        <label class="ph-line"><span>Не показывать в Рамадан</span>
+          <span class="ph-switch"><input type="checkbox" id="rRamadan"><span></span></span></label>
+      </div>
+    </section>
+
+    <section class="ph-card">
+      <div class="ph-card-title">Оформление</div>
+      <div class="ph-field">Тема
+        <div class="ph-seg" id="themeSeg">
+          <button type="button" data-v="auto">Как в системе</button>
+          <button type="button" data-v="dark">Тёмная</button>
+          <button type="button" data-v="light">Светлая</button>
+        </div>
+      </div>
+      <div class="ph-field">Цвет
+        <div class="ph-swatches" id="accentSeg"></div>
+      </div>
+      <div class="ph-field">Размер текста
+        <div class="ph-seg" id="sizeSeg">
+          <button type="button" data-v="1">Обычный</button>
+          <button type="button" data-v="1.12">Крупный</button>
+          <button type="button" data-v="1.25">Очень крупный</button>
+        </div>
+      </div>
+      <label class="ph-line"><span>Дата по хиджре</span><span class="ph-switch"><input type="checkbox" id="dHijri"><span></span></span></label>
+      <label class="ph-line"><span>Восход</span><span class="ph-switch"><input type="checkbox" id="dSunrise"><span></span></span></label>
+      <label class="ph-line"><span>Зенит (солнечный полдень)</span><span class="ph-switch"><input type="checkbox" id="dZenith"><span></span></span></label>
+      <label class="ph-line"><span>Секунды в отсчёте</span><span class="ph-switch"><input type="checkbox" id="dSeconds"><span></span></span></label>
+    </section>
+
+    <section class="ph-card">
+      <div class="ph-card-title">Сброс</div>
+      <p class="ph-text">Вернуть настройки мечети «Сабыр» (Тюмень): расписание ДУМ, икама и джума как в мечети.</p>
+      <button type="button" class="ph-btn ghost" id="resetAll">Вернуть настройки «Сабыр»</button>
+    </section>
+  </main>
+
+  <nav class="ph-tabs" aria-label="Разделы">
+    <button type="button" class="ph-tab on" data-view="viewToday"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3c2.2 1.6 3.4 3.3 3.4 5H8.6c0-1.7 1.2-3.4 3.4-5zM6 21V11.5C6 9.6 8.7 8 12 8s6 1.6 6 3.5V21M4 21h16M10 21v-4a2 2 0 0 1 4 0v4"/></svg></span>Сегодня</button>
+    <button type="button" class="ph-tab" data-view="viewMonth"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>Месяц</button>
+    <button type="button" class="ph-tab" data-view="viewQibla"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span>Кибла</button>
+    <button type="button" class="ph-tab" data-view="viewNotify"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 20.5a2.2 2.2 0 0 0 4 0"/></svg></span>Азан</button>
+    <button type="button" class="ph-tab" data-view="viewSettings"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></span>Настройки</button>
+  </nav>
+
+  <noscript><div style="padding:2rem;text-align:center;color:#fff">Для работы включите JavaScript.</div></noscript>
+  <script src="assets/store.js?v=20261026"></script>
+  <script src="assets/prayer-times.js?v=20261026"></script>
+  <script src="assets/tyumen.js?v=20261026"></script>
+  <script src="assets/schedule.js?v=20261026"></script>
+  <script src="assets/clock-tick.js?v=20261026"></script>
+  <script src="assets/cloud.js?v=20261026"></script>
+  <script src="assets/cities.js?v=20261025"></script>
+  <script src="assets/phone.js?v=20261025"></script>
+  <script src="assets/phone-settings.js?v=20261025"></script>
+  <script>
+    /* работа без интернета: service worker (только сайт по https, не приложение Android) */
+    if ('serviceWorker' in navigator && !window.NamazPhone && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      navigator.serviceWorker.register('phone-sw.js').catch(function () { /* без офлайна */ });
+    }
+  </script>
+</body>
+</html>
