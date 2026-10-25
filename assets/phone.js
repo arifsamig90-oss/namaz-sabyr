@@ -362,7 +362,13 @@
     lines.push('END:VCALENDAR');
     var text = lines.join('\r\n');
     if (!count) { window.alert('Нет событий: включите хотя бы один намаз в списке ниже.'); return; }
-    /* iPhone открывает календарный файл сразу с кнопкой «Добавить все» */
+    /* iPhone: файл — через меню «Поделиться» (ссылки data:/blob: из приложения на экране «Домой» не открываются) */
+    var file = null;
+    try { file = new File([text], 'namaz.ics', { type: 'text/calendar' }); } catch (e) { file = null; }
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: 'Намаз — календарь' }).catch(function () { /* отмена */ });
+      return;
+    }
     var a = document.createElement('a');
     a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(text);
     a.download = 'namaz.ics';
@@ -401,10 +407,13 @@
   function renderPerms() {
     var box = $('permBox');
     if (!Native) {
-      box.innerHTML = '<p class="ph-text">Веб-страница не может сама присылать уведомления. Добавьте намазы в Календарь — ' +
-        'телефон (и Apple Watch) напомнит о каждом, даже когда приложение закрыто. Ниже выберите, о чём напоминать.</p>' +
-        '<div class="ph-btns"><button type="button" class="ph-btn" id="icsBtn">Добавить в Календарь на 30 дней</button></div>' +
-        '<p class="ph-hint">Раз в месяц добавляйте снова (повторное добавление обновит события). На Android в приложении уведомления и азан работают сами.</p>';
+      var sub = location.protocol === 'https:' ? new URL('calendar/sabyr.ics', location.href).href.replace(/^https:/, 'webcal:') : '';
+      box.innerHTML = '<p class="ph-text">Веб-страница не может сама присылать уведомления — о намазах напомнит Календарь телефона (и Apple Watch).</p>' +
+        (sub ? '<div class="ph-btns"><a class="ph-btn" id="subBtn" href="' + sub + '">Подписаться на календарь мечети «Сабыр»</a></div>' +
+          '<p class="ph-hint">Тюмень, время и икама как в мечети. Календарь обновляется сам — добавлять заново не нужно. ' +
+          'Если напоминания не приходят: Настройки → Календарь → Учётные записи → «Подписные календари» → «Намаз» → выключите «Удалять напоминания».</p>' : '') +
+        '<div class="ph-btns"><button type="button" class="ph-btn ghost" id="icsBtn">Файл с моими настройками (30 дней)</button></div>' +
+        '<p class="ph-hint">Для другого города или своей икамы: откроется меню «Поделиться» — выберите «Календарь» (или сохраните в «Файлы» и откройте). Ниже — о каких намазах напоминать в файле.</p>';
       $('icsBtn').onclick = exportCalendar;
       $('soundCard').hidden = true;
       return;

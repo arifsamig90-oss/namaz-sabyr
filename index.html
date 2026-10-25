@@ -56,7 +56,10 @@
     <ol>
       <li>Откройте эту страницу в <b>Safari</b> и нажмите «Открыть приложение».</li>
       <li>Нажмите <b>«Поделиться»</b> (квадрат со стрелкой) → <b>«На экран „Домой“»</b>.</li>
-      <li>Напоминания о намазе: вкладка «Напоминания» → «Добавить в Календарь».</li>
+      <li>Напоминания о намазе — подпишитесь на календарь мечети (обновляется сам):</li>
+    </ol>
+    <div class="btns" style="margin-top:10px"><a class="btn ghost" id="sub" href="calendar/sabyr.ics">Подписаться на календарь намазов</a></div>
+    <ol style="display:none">
     </ol>
   </section>
 
@@ -87,6 +90,11 @@
     </ol>
   </section>
 
+  <script>
+    /* webcal:// — iPhone и Mac сразу предлагают подписаться (календарь обновляется сам) */
+    var sub = document.getElementById('sub');
+    if (sub && location.protocol === 'https:') sub.href = new URL('calendar/sabyr.ics', location.href).href.replace(/^https:/, 'webcal:');
+  </script>
   <footer>Записи азана — Wikimedia Commons (CC0, CC BY-SA 4.0)</footer>
 </main>
 </body>

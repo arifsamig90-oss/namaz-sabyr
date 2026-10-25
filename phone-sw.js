@@ -4,7 +4,7 @@
  * из кэша, а в фоне проверяется новая версия (stale-while-revalidate).
  * Меняете файлы сайта — поднимите VERSION, чтобы телефоны обновились.
  */
-var VERSION = 'namaz-phone-20261025c';
+var VERSION = 'namaz-phone-20261026a';
 var FILES = [
   'phone.html', 'phone.webmanifest',
   'assets/phone.css', 'assets/phone.js', 'assets/phone-settings.js', 'assets/cities.js',

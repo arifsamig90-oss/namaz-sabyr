@@ -406,3 +406,4 @@ html.ios .ph-tabs {
 }
 html.ios .ph-tab { font-size: 10px; font-weight: 500; gap: 1px; }
 html.ios .ph-tab .ic { width: 25px; height: 25px; }
+a.ph-btn { display: inline-block; text-decoration: none; text-align: center; }

@@ -1,0 +1,28 @@
+# Календарь намазов мечети «Сабыр» (calendar/sabyr.ics) пересобирается
+# 1-го и 15-го числа каждого месяца — подписка на iPhone всегда на 4 месяца вперёд.
+name: Календарь намазов
+
+on:
+  schedule:
+    - cron: "0 20 1,15 * *"   # 01:00 по Тюмени
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  calendar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Собрать календарь
+        run: TZ=Asia/Yekaterinburg node tools/make-ics.js
+      - name: Сохранить
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add calendar/sabyr.ics
+          git diff --cached --quiet || git commit -m "Календарь намазов: обновление" && git push
