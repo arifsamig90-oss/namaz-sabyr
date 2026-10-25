@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-accent="emerald">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Табло намаза</title>
+<meta name="description" content="Табло намаза для мечети и дома: расписание на день, азан и икама, обратный отсчёт до следующего намаза, джума, объявления. Всё настраивается под вас.">
+<meta name="theme-color" content="#0a1512">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%95%8C%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css?v=20261025">
+</head>
+<body class="screen-body">
+  <div class="board">
+    <header class="board-head">
+      <div class="brand">
+        <div class="logo" id="logo" aria-hidden="true">🕌</div>
+        <div class="brand-text">
+          <h1 id="mosqueName">Мечеть</h1>
+          <div class="sub" id="mosqueSub"></div>
+        </div>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock" id="clock">--:--</div>
+        <div class="dates">
+          <span id="gregDate">—</span><span id="hijriWrap"> · <span id="hijriDate"></span></span>
+        </div>
+      </div>
+      <div class="board-actions">
+        <button class="icon-btn" id="btnFull" type="button" title="Во весь экран (клавиша F)" aria-label="Во весь экран">⛶</button>
+        <a class="icon-btn" href="admin.html" title="Настройки" aria-label="Настройки">⚙</a>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Следующий намаз">
+      <div class="hero-left">
+        <div class="hero-label" id="heroLabel">Следующий намаз</div>
+        <div class="hero-prayer" id="heroName">—</div>
+        <div class="hero-count" id="heroCount">--:--:--</div>
+      </div>
+      <div class="hero-right">
+        <div class="jumuah-chip" id="jumuahChip" hidden></div>
+        <div class="progress" aria-hidden="true"><div class="progress-fill" id="progress"></div></div>
+        <div class="hero-note" id="heroNote"></div>
+      </div>
+    </section>
+
+    <section class="cards" id="cards" aria-label="Расписание намазов"></section>
+
+    <footer class="board-foot">
+      <div class="warn-row" id="warnRow"></div>
+      <div class="ticker" id="ticker" hidden><div class="ticker-track" id="tickerTrack"></div></div>
+      <div class="foot-note" id="footNote" hidden></div>
+    </footer>
+  </div>
+
+  <noscript><div style="padding:2rem;text-align:center">Для работы табло включите JavaScript.</div></noscript>
+  <script src="assets/store.js?v=20261025"></script>
+  <script src="assets/prayer-times.js?v=20261025"></script>
+  <script src="assets/tyumen.js?v=20261025"></script>
+  <script src="assets/backgrounds.js?v=20261025"></script>
+  <script src="assets/schedule.js?v=20261025"></script>
+  <script src="assets/clock-tick.js?v=20261025"></script>
+  <script src="assets/screen.js?v=20261025"></script>
+</body>
+</html>

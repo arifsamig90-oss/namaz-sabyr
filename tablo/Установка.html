@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Намаз-Табло — установка на телефон и Android TV</title>
+<style>
+:root{
+  --bg:#f6f5ef; --card:#ffffff; --line:#e2e0d5; --text:#1d2b24; --muted:#5f7369;
+  --accent:#1f8f68; --accent-soft:#e3f2ea; --warn:#8a5a14; --warn-bg:#fbf3e2; --warn-line:#e8cf9a;
+  --code:#f0efe7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:28px 20px 80px}
+h1{font-size:28px;margin:0 0 6px}
+h2{font-size:21px;margin:38px 0 10px;padding-top:6px;border-top:2px solid var(--line)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:8px 0}
+.meta{color:var(--muted);font-size:14px;margin-bottom:26px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+.callout{background:var(--accent-soft);border:1px solid #bfe3d2;border-radius:12px;padding:12px 16px;margin:14px 0}
+.callout.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
+.callout b{color:inherit}
+ol,ul{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+li b{color:#14351f}
+table{width:100%;border-collapse:collapse;margin:12px 0;background:var(--card)}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:15px;vertical-align:top}
+th{background:var(--accent-soft)}
+code,.path{background:var(--code);border-radius:6px;padding:1px 6px;font:14px Consolas,Menlo,monospace;white-space:nowrap}
+.step{display:flex;gap:14px;margin:16px 0;align-items:flex-start}
+.step .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700}
+.step .body{flex:1}
+hr{border:none;border-top:1px solid var(--line);margin:30px 0}
+.small{font-size:14px;color:var(--muted)}
+@media print{
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .card,.callout,table{break-inside:avoid}
+  h2{break-after:avoid}
+  .noprint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+  <div>
+    <h1>Намаз‑Табло: установка на телефон и табло в мечети</h1>
+    <div class="meta">Полная инструкция · Android‑телефон и Android TV · версия от 30.09.2026</div>
+  </div>
+  <button class="noprint" onclick="window.print()" style="padding:8px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer">Печать</button>
+</div>
+
+<div class="callout"><b>Коротко:</b> «Намаз‑Табло» — это небольшая программа из файлов (папка <code>namaz-tablo</code>). Интернет ей не нужен.
+Табло — любое устройство с браузером: телефон, планшет, компьютер или ТВ‑приставка. В мечети удобнее всего открыть табло
+на <b>Android TV</b> через браузер и включить режим «киоска» — так оно будет запускаться само и работать целый день.</div>
+
+<h2>Что понадобится</h2>
+<ul>
+  <li>Папка <code>namaz-tablo</code> (файлы приложения — вам её уже передали).</li>
+  <li>Для табло в мечети: <b>ТВ с Android TV</b> или приставка (Xiaomi TV Stick, SberBox Top, Tanix и т.п.) с пультом.</li>
+  <li>Wi‑Fi (не обязательно с интернетом — достаточно, чтобы телефон/ТВ и «сервер» были в одной сети).</li>
+  <li>Устройство для раздачи файлов: лучше всего — небольшой ноутбук/мини‑ПК с Windows (он будет «сервером», см. Способ Б).</li>
+</ul>
+
+<h2>Как доставить приложение — выберите способ</h2>
+<table>
+  <tr><th style="width:16%">Способ</th><th>Как это работает</th><th style="width:26%">Плюсы / минусы</th></tr>
+  <tr>
+    <td><b>А. Флешка / копия на устройстве</b></td>
+    <td>Скопировать папку на телефон или приставку и открыть файл <code>index.html</code> в браузере.</td>
+    <td>Просто и без сети. Минус: обновлять файлы нужно вручную, на ТВ пути к файлам неудобные.</td>
+  </tr>
+  <tr>
+    <td><b>Б. Локальный сервер (рекомендуем)</b></td>
+    <td>На компьютере в мечети запускается файл <code>Запустить_сервер.bat</code>. Появляется адрес вида <code>http://192.168.1.50:8080/index.html</code> — его открывают телефон и ТВ по Wi‑Fi.</td>
+    <td>Один раз настроили — работают все устройства. Интернет не нужен. Минус: компьютер должен быть включён.</td>
+  </tr>
+  <tr>
+    <td><b>В. Интернет‑хостинг</b></td>
+    <td>Выложить папку на любой бесплатный хостинг и открывать по обычной ссылке из любой точки.</td>
+    <td>Удобно, но требует настройки и постоянного интернета. Можно сделать позже — скажите, помогу.</td>
+  </tr>
+</table>
+
+<h2>Часть 1. Телефон или планшет (Android)</h2>
+
+<div class="step"><div class="num">1</div><div class="body">
+  <b>Скопируйте папку на телефон.</b> Любым способом: кабелем (папка <code>Download</code> или <code>Documents</code>),
+  через облако (Яндекс.Диск/Google Drive), или по Wi‑Fi (например, приложением «Send Files to TV» с компьютера).
+  Чтобы не запутаться, положите её в <code>Download/namaz-tablo</code>.
+</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">
+  <b>Откройте табло.</b> В файловом менеджере (Files by Google или «Мои файлы») зайдите в папку <code>namaz-tablo</code> →
+  нажмите на <code>index.html</code> → «Открыть с помощью» → <b>Chrome</b>. Или откройте Chrome и введите адрес:
+  <div><code>file:///sdcard/Download/namaz-tablo/index.html</code></div>
+  <span class="small">Если браузер уточнит, разрешить ли доступ к файлам — разрешите.</span>
+</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">
+  <b>Добавьте ярлык.</b> В Chrome откройте меню (⋮) → «Добавить на главный экран» / «Добавить в закладки», чтобы табло
+  всегда было под рукой.
+</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">
+  <b>Настройте под себя.</b> Откройте <code>admin.html</code> (это страница настроек): название мечети, город, икама,
+  объявления, «Читается в мечетях», тема. Все изменения сохраняются на этом телефоне и сразу видны на табло.
+</div></div>
+
+<div class="callout"><b>Совет:</b> чтобы перенести свои настройки на другое устройство — в настройках нажмите
+«Скопировать ссылку с настройками» и откройте эту ссылку на другом устройстве: настройки применятся автоматически.</div>
+
+<div class="callout"><b>В интернете:</b> чтобы сайт открывался откуда угодно по ссылке (например, прихожанам на телефоне),
+выложите его на бесплатный хостинг — пошаговая инструкция в файле <b>«Хостинг.html»</b>. Локальная версия
+продолжает работать, как раньше.</div>
+
+<h2>Часть 2. Табло в мечети на Android TV</h2>
+
+<div class="step"><div class="num">1</div><div class="body">
+  <b>Подключите приставку и проверьте время.</b> Приставка подключается к телевизору по HDMI. Сразу зайдите в
+  <b>Настройки → Система → Дата и время</b> и убедитесь, что стоит верный часовой пояс (для Тюмени — <b>GMT+5, Екатеринбург</b>).
+  <span class="small">Это самое важное: табло показывает время того устройства, на котором открыто. Если пояс неверный — всё будет сдвинуто.</span>
+</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">
+  <b>Установите браузер.</b> Откройте Play Маркет на ТВ и установите <b>TV Bro</b> (бесплатный браузер для Android TV)
+  или <b>Puffin TV Browser</b>. <br>
+  <span class="small">Если Play Маркет не находит TV Bro: скачайте TV Bro (APK) на флешку или телефон, установите на приставку
+  через файловый менеджер или приложение «Send Files to TV». Разрешите установку из неизвестных источников.</span>
+</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">
+  <b>Передайте файлы или адрес</b> — любым из способов:
+  <ul>
+    <li><b>Способ Б — локальный сервер (рекомендуется).</b> На компьютере в мечети положите папку <code>namaz-tablo</code>,
+      запустите из неё файл <code>Запустить_сервер.bat</code> (двойным щелчком). В чёрном окне появится адрес вида
+      <code>http://192.168.1.50:8080/index.html</code>. Если Windows спросит про доступ к сети — <b>разрешите</b> (частные сети).
+      Окно не закрывайте — это и есть «сервер». На ТВ откройте этот адрес в TV Bro.</li>
+    <li><b>Способ А — файлы на приставке.</b> Через «Send Files to TV» (поставьте её и на телефон, и на ТВ) скопируйте папку
+      на приставку, она окажется в папке <code>Download</code>. В TV Bro откройте адрес
+      <code>file:///sdcard/Download/namaz-tablo/index.html</code> (если не откроется — вариант
+      <code>file:///storage/emulated/0/Download/namaz-tablo/index.html</code>).</li>
+  </ul>
+</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">
+  <b>Разверните табло на весь экран.</b> На табло справа сверху есть кнопка <b>⛶</b> («во весь экран») — выберите её пультом
+  и нажмите OK. Если к приставке подключена USB‑клавиатура, работает клавиша <b>F</b>. Кнопка <b>⚙</b> рядом — это вход в настройки.
+</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">
+  <b>Включите режим «киоска»</b>, чтобы табло жило само:
+  <ul>
+    <li>отключите заставку и сон: <b>Настройки → Экран и звук → Заставка</b> (выкл), <b>Настройки → Энергосбережение/Сон</b> (никогда);</li>
+    <li>включите «<b>Не выключать экран</b>»: Настройки → О приставке → 7 раз нажмите OK на «Номер сборки» → вернитесь →
+      «Для разработчиков» → «Не выключать экран» (включить);</li>
+    <li>автозапуск при включении: установите приложение <b>Launch on Boot</b> (или похожее «Boot Apps») и назначьте ему
+      запускать TV Bro. В TV Bro включите настройку «восстанавливать последнюю вкладку».</li>
+    <li>продвинутый вариант — <b>Fully Kiosk Browser</b>: сам запускается при включении, сам открывает нужный адрес,
+      блокирует случайные выходы, не даёт экрану гаснуть. Ставится вручную (APK). Если захотите — помогу настроить.</li>
+  </ul>
+</div></div>
+
+<div class="step"><div class="num">6</div><div class="body">
+  <b>Перенесите настройки на ТВ.</b> Настройте приложение на телефоне (так удобнее), затем нажмите
+  «Скопировать ссылку с настройками». Откройте эту ссылку на ТВ один раз — настройки применятся и сохранятся.
+  <span class="small">Вводить длинный адрес пультом неудобно — используйте приложение <b>Google TV</b> (или «Android TV Remote»)
+  на телефоне: там есть виртуальная клавиатура, и всё, что вы набираете на телефоне, печатается на ТВ. Ещё удобнее —
+  USB‑клавиатура или USB‑мышь в приставке.</span>
+</div></div>
+
+<div class="callout warn"><b>Проверка перед тем, как оставить табло работать:</b> часы на табло показывают верное время;
+«Читается в мечетях» и икама совпадают с вашим календарём; объявления бегут; через 10 минут экран не гаснет и не включает заставку.</div>
+
+<h2>Ежедневная эксплуатация</h2>
+<ul>
+  <li><b>Объявления</b> меняются в настройках (<code>admin.html</code> → «Объявления») — можно прямо с телефона, а затем
+    перенести на табло «ссылкой с настройками».</li>
+  <li><b>Расписание</b> (икама, джума, «чтение») сверяйте раз в месяц с местным календарём; при изменениях — правки в настройках.</li>
+  <li><b>Печать месяца:</b> откройте <code>calendar.html</code> → «Печать» (формат A4, как в книжке мечети).</li>
+  <li><b>Обновление файлов:</b> просто замените папку новой версией. Настройки хранятся в браузере и сохранятся,
+    пока адрес не менялся; если меняли — перенесите «ссылкой с настройками».</li>
+</ul>
+
+<h2>Частые вопросы</h2>
+<table>
+  <tr><th style="width:38%">Вопрос</th><th>Ответ</th></tr>
+  <tr><td>Время на табло неверное</td><td>Проверьте дату/время/часовой пояс на самом устройстве (приставке/телефоне). Табло показывает время устройства.</td></tr>
+  <tr><td>Экран гаснет или включается заставка</td><td>Отключите сон и заставку (Часть 2, шаг 5) или поставьте Fully Kiosk Browser.</td></tr>
+  <tr><td>Пропал интернет — табло остановится?</td><td>Нет. Локальный сервер и файлы работают без интернета. Важно лишь, чтобы ТВ и компьютер были в одной сети Wi‑Fi.</td></tr>
+  <tr><td>Настройки не появились на другом устройстве сами</td><td>Так и задумано: настройки хранятся в браузере каждого устройства. Переносите «ссылкой с настройками» или экспорт/импорт JSON.</td></tr>
+  <tr><td>На ТВ не открывается файл с флешки</td><td>Используйте способ с локальным сервером (Б) — он самый надёжный для ТВ.</td></tr>
+  <tr><td>Как убрать курсор с экрана?</td><td>Курсор исчезает сам через несколько секунд и появляется при движении пульта — это нормально.</td></tr>
+  <tr><td>Хотим, чтобы табло открывалось «само» как приложение</td><td>Launch on Boot (простой вариант) или Fully Kiosk Browser (полноценный киоск). Помогу с настройкой.</td></tr>
+</table>
+
+<h2>Где что лежит</h2>
+<table>
+  <tr><th>Файл</th><th>Что это</th></tr>
+  <tr><td><code>index.html</code></td><td>Табло — главный экран.</td></tr>
+  <tr><td><code>admin.html</code></td><td>Настройки (мечеть, икама, «Читается в мечетях», объявления…).</td></tr>
+  <tr><td><code>calendar.html</code></td><td>Расписание на месяц + печать.</td></tr>
+  <tr><td><code>Запустить_сервер.bat</code></td><td>Запуск локального сервера для телефона и ТВ (двойной щелчок).</td></tr>
+  <tr><td><code>data/</code></td><td>Таблицы расписания Тюмени (2026–2046) и исходные файлы.</td></tr>
+  <tr><td><code>screenshots/</code></td><td>Образцы экранов.</td></tr>
+</table>
+
+<hr>
+<div class="small">Если что-то не получится на любом шаге — напишите, в каком месте остановились (можно фото экрана ТВ), и я помогу.
+«Намаз‑Табло» — самостоятельная программа; интернет для работы не требуется.</div>
+
+</div>
+</body>
+</html>

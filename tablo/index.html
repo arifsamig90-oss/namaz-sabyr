@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru" data-accent="emerald">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Табло намаза</title>
+<meta name="description" content="Табло намаза для мечети в стиле Mawaqit: большие часы, отсчёт до азана и икамы, «Читается в мечетях», полноэкранные экраны азана и икамы.">
+<meta name="theme-color" content="#05100c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%95%8C%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/mawaqit.css?v=20261026">
+</head>
+<body class="mw">
+  <div class="mw-bg" id="bg" aria-hidden="true"></div>
+
+  <main class="mw-screen" id="main">
+    <header class="mw-top">
+      <div class="mw-date">
+        <div class="mw-date-wd"><span id="gWeekday">—</span><span class="mw-weather" id="weather" hidden></span></div>
+        <div class="mw-date-d" id="gDate">—</div>
+      </div>
+      <div class="mw-brand">
+        <div class="mw-logo" id="logo" aria-hidden="true">🕌</div>
+        <div class="mw-brand-text">
+          <h1 id="mosqueName">Мечеть</h1>
+          <div class="mw-sub" id="mosqueSub"></div>
+        </div>
+      </div>
+      <div class="mw-date right" id="hijriBlock">
+        <div class="mw-date-wd">Хиджра</div>
+        <div class="mw-date-d" id="hDate">—</div>
+      </div>
+    </header>
+
+    <section class="mw-mid">
+      <aside class="mw-side">
+        <div class="mw-box" id="boxSunrise">
+          <div class="bx-name">Восход <span class="ar">الشروق</span></div>
+          <div class="bx-time" id="tSunrise">--:--</div>
+        </div>
+        <div class="mw-box read" id="boxRead">
+          <div class="bx-name">Читается в мечетях</div>
+          <div class="bx-time" id="tRead">--:--</div>
+          <div class="bx-note" id="nRead"></div>
+        </div>
+      </aside>
+
+      <div class="mw-center">
+        <div class="mw-clock" id="clock" aria-label="Текущее время">
+          <span class="roll" id="hh"></span><span class="colon">:</span><span class="roll" id="mm"></span><span class="mw-sec roll" id="ss"></span>
+        </div>
+        <div class="mw-next" id="next">
+          <span class="mw-next-label" id="nextLabel">—</span>
+          <span class="mw-next-count roll" id="nextCount"></span>
+        </div>
+      </div>
+
+      <aside class="mw-side">
+        <div class="mw-box" id="boxJumuah">
+          <div class="bx-name">Джума <span class="ar">الجمعة</span></div>
+          <div class="bx-list" id="tJumuah"></div>
+        </div>
+        <div class="mw-box" id="boxZenith">
+          <div class="bx-name">Зенит <span class="ar">الزوال</span></div>
+          <div class="bx-time" id="tZenith">--:--</div>
+          <div class="bx-note">солнечный полдень</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="mw-prayers" id="prayers" aria-label="Расписание намазов"></section>
+
+    <footer class="mw-foot" id="foot">
+      <div class="mw-ticker" id="ticker" hidden><div class="mw-ticker-track" id="tickerTrack"></div></div>
+    </footer>
+  </main>
+
+  <div class="mw-popup" id="popup" aria-live="polite">
+    <div class="pp-title">Скоро читается в мечетях</div>
+    <div class="pp-row"><span class="pp-time" id="ppTime">--:--</span><span class="pp-count" id="ppCount"></span></div>
+  </div>
+
+  <div class="mw-overlay" id="overlay" hidden>
+    <div class="ov-clock" id="ovClock"></div>
+    <div class="ov-ar" id="ovAr"></div>
+    <div class="ov-title" id="ovTitle"></div>
+    <div class="ov-name" id="ovName"></div>
+    <div class="ov-big roll" id="ovBig"></div>
+    <div class="ov-note" id="ovNote"></div>
+  </div>
+
+  <div class="mw-tools" id="tools">
+    <button class="mw-tool" id="btnFull" type="button" title="Во весь экран (клавиша F)" aria-label="Во весь экран">⛶</button>
+    <a class="mw-tool" href="admin.html" title="Настройки" aria-label="Настройки">⚙</a>
+    <a class="mw-tool" href="classic.html" title="Классическое табло" aria-label="Классическое табло">▦</a>
+  </div>
+
+  <noscript><div style="padding:2rem;text-align:center;color:#fff">Для работы табло включите JavaScript.</div></noscript>
+  <script src="assets/store.js?v=20261026"></script>
+  <script src="assets/prayer-times.js?v=20261026"></script>
+  <script src="assets/tyumen.js?v=20261026"></script>
+  <script src="assets/backgrounds.js?v=20261026"></script>
+  <script src="assets/schedule.js?v=20261026"></script>
+  <script src="assets/clock-tick.js?v=20261026"></script>
+  <script src="assets/weather.js?v=20261026"></script>
+  <script src="assets/cloud.js?v=20261026"></script>
+  <script src="assets/mawaqit.js?v=20261026"></script>
+</body>
+</html>

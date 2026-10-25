@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Публикация «Намаз-Табло» в интернете</title>
+<style>
+:root{
+  --bg:#f6f5ef; --card:#ffffff; --line:#e2e0d5; --text:#1d2b24; --muted:#5f7369;
+  --accent:#1f8f68; --accent-soft:#e3f2ea; --warn:#8a5a14; --warn-bg:#fbf3e2; --warn-line:#e8cf9a;
+  --code:#f0efe7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:28px 20px 80px}
+h1{font-size:28px;margin:0 0 6px}
+h2{font-size:21px;margin:38px 0 10px;padding-top:6px;border-top:2px solid var(--line)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:8px 0}
+.meta{color:var(--muted);font-size:14px;margin-bottom:26px}
+.callout{background:var(--accent-soft);border:1px solid #bfe3d2;border-radius:12px;padding:12px 16px;margin:14px 0}
+.callout.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
+ol,ul{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0;background:var(--card)}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:15px;vertical-align:top}
+th{background:var(--accent-soft)}
+code,.path{background:var(--code);border-radius:6px;padding:1px 6px;font:14px Consolas,Menlo,monospace;white-space:nowrap}
+.step{display:flex;gap:14px;margin:14px 0;align-items:flex-start}
+.step .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700}
+.step .body{flex:1}
+hr{border:none;border-top:1px solid var(--line);margin:30px 0}
+.small{font-size:14px;color:var(--muted)}
+@media print{
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .card,.callout,table{break-inside:avoid}
+  h2{break-after:avoid}
+  .noprint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+  <div>
+    <h1>Публикация «Намаз‑Табло» в интернете</h1>
+    <div class="meta">Хостинг: как выложить сайт и получить ссылку · пошагово, без программирования · 30.09.2026</div>
+  </div>
+  <button class="noprint" onclick="window.print()" style="padding:8px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer">Печать</button>
+</div>
+
+<div class="callout"><b>Коротко:</b> чтобы сайт открывался по ссылке с любого телефона и телевизора, его нужно «выложить»
+(загрузить) на бесплатный <b>статический хостинг</b>. Ниже — готовые способы по шагам. Локальная версия
+(папка с файлами и «Запустить_сервер.bat») продолжает работать как раньше — интернет для неё не нужен.</div>
+
+<h2>Что вы получите после публикации</h2>
+<table>
+  <tr><th style="width:46%">Адрес</th><th>Что открывается</th></tr>
+  <tr><td><code>https://ваш-адрес/</code></td><td>Табло намаза (главный экран для мечети и прихожан)</td></tr>
+  <tr><td><code>https://ваш-адрес/admin.html</code></td><td>Настройки — можно менять с любого устройства онлайн</td></tr>
+  <tr><td><code>https://ваш-адрес/calendar.html</code></td><td>Расписание на месяц + печать</td></tr>
+  <tr><td><code>https://ваш-адрес/Установка.html</code></td><td>Инструкция по установке (телефон, Android TV)</td></tr>
+</table>
+
+<h2>Три вещи, которые важно понять сразу</h2>
+<ol>
+  <li><b>Сайт статический</b> — подойдёт любой бесплатный статический хостинг: GitHub Pages, Netlify, Cloudflare Pages.
+    Ни одна из страниц не требует сервера или базы данных.</li>
+  <li><b>Настройки хранятся в браузере каждого устройства.</b> «Изменять онлайн» = открывать
+    <code>/admin.html</code> на сайте с любого устройства и настраивать под себя. Чтобы <b>разослать свои настройки</b>,
+    в настройках есть кнопка «Скопировать ссылку с настройками» — получатель откроет сайт уже с вашей конфигурацией
+    (сухур/чтение/икама/объявления и т.д.).</li>
+  <li><b>Обновление сайта</b> — загрузить файлы заново (2–3 клика). Все ссылки при этом остаются те же.</li>
+</ol>
+
+<h2>Способ 1. GitHub Pages — рекомендую (бесплатно и надёжно)</h2>
+
+<div class="step"><div class="num">1</div><div class="body">
+  Зайдите на <b>github.com</b> и нажмите <b>Sign up</b> — зарегистрируйтесь (нужна почта; бесплатно, без карты).
+  Если аккаунт уже есть — просто войдите.
+</div></div>
+
+<div class="step"><div class="num">2</div><div class="body">
+  Вверху справа нажмите <b>«+» → New repository</b>.
+  <ul>
+    <li><b>Repository name:</b> <code>namaz-tablo</code></li>
+    <li>Тип: <b>Public</b></li>
+    <li>Нажмите <b>Create repository</b>. Галочки «Add README» ставить не нужно.</li>
+  </ul>
+</div></div>
+
+<div class="step"><div class="num">3</div><div class="body">
+  На странице репозитория выберите <b>Add file → Upload files</b> (или ссылку «uploading an existing file»).
+</div></div>
+
+<div class="step"><div class="num">4</div><div class="body">
+  Перетащите в окно браузера <b>всё содержимое папки <code>namaz-tablo</code></b>:
+  файлы <code>index.html</code>, <code>admin.html</code>, <code>calendar.html</code>, <code>Установка.html</code>,
+  <code>Хостинг.html</code>, <code>README.md</code> и папку <code>assets</code>.<br>
+  <span class="small">Важно: перетаскивайте файлы <b>изнутри</b> папки, чтобы <code>index.html</code> оказался в самом корне.
+  Проще всего — заранее распаковать наш архив <code>Намаз-Табло_для_хостинга.zip</code> и загрузить его содержимое.
+  Если загрузите лишние папки (data, screenshots) — не страшно.</span>
+</div></div>
+
+<div class="step"><div class="num">5</div><div class="body">
+  Внизу страницы нажмите <b>Commit changes</b> и подождите, пока файлы загрузятся.
+</div></div>
+
+<div class="step"><div class="num">6</div><div class="body">
+  Откройте вкладку <b>Settings</b> → слева найдите <b>Pages</b>.
+  <ul>
+    <li><b>Source:</b> Deploy from a branch</li>
+    <li><b>Branch:</b> <code>main</code>, папка <code>/ (root)</code> → <b>Save</b></li>
+  </ul>
+</div></div>
+
+<div class="step"><div class="num">7</div><div class="body">
+  Подождите 1–3 минуты и обновите страницу — сверху появится ссылка вида
+  <div><code>https://ваш-логин.github.io/namaz-tablo/</code></div>
+  Это ваш сайт. Настройки: <code>.../namaz-tablo/admin.html</code>.
+</div></div>
+
+<div class="callout"><b>Обновление сайта (когда что-то поменяли в файлах):</b> в репозитории снова
+<code>Add file → Upload files</code> → перетащите изменённые файлы → <b>Commit changes</b>. Через минуту-две сайт обновится.</div>
+
+<h2>Способ 2. Netlify — самый быстрый («перетащить папку»)</h2>
+
+<div class="step"><div class="num">1</div><div class="body">
+  Откройте <b>netlify.com</b> и зарегистрируйтесь (бесплатно; можно войти через Google или почту).
+</div></div>
+<div class="step"><div class="num">2</div><div class="body">
+  Зайдите в раздел <b>Sites</b> → <b>Add new site → Deploy manually</b> — или сразу откройте
+  <code>app.netlify.com/drop</code>.
+</div></div>
+<div class="step"><div class="num">3</div><div class="body">
+  Перетащите в окно браузера <b>папку <code>namaz-tablo</code></b> целиком (или наш архив
+  <code>Намаз-Табло_для_хостинга.zip</code> — Netlify сам его распакует).
+</div></div>
+<div class="step"><div class="num">4</div><div class="body">
+  Через полминуты появится ссылка вида <code>https://krasivoe-imya-123.netlify.app</code>.
+  В <b>Site settings → Change site name</b> можно сделать её понятнее, например
+  <code>mechet-tyumen.netlify.app</code>.
+</div></div>
+
+<div class="callout warn"><b>Примечание:</b> у Netlify бывают ограничения бесплатного тарифа (лимиты трафика и «заморозка» неактивных сайтов).
+Для небольшого сайта мечети обычно хватает, но если попросят оплату — используйте GitHub Pages (Способ 1): там для таких сайтов лимитов практически нет.</div>
+
+<h2>Способ 3. Cloudflare Pages (для продвинутых)</h2>
+<ol>
+  <li>Аккаунт на <b>dash.cloudflare.com</b> (бесплатно).</li>
+  <li><b>Workers &amp; Pages → Create → Pages → Upload assets</b>.</li>
+  <li>Перетащите папку (или архив) → <b>Deploy</b>.</li>
+  <li>Ссылка вида <code>https://имя.pages.dev</code>.</li>
+</ol>
+
+<h2>Способ 4. «Выложите сами — напишите мне в чат»</h2>
+<p>Если не хотите возиться: напишите в чат слово <b>«выложи»</b> и укажите <b>email</b> для аккаунта хостинга —
+я создам аккаунт на бесплатном сервисе <b>surge.sh</b>, загружу сайт и пришлю вам ссылку, логин и пароль
+(пароль потом можно сменить). Если у вас уже есть аккаунт на GitHub или Netlify — просто скажите,
+в каком сервисе выкладывать.</p>
+
+<h2>После публикации — чеклист</h2>
+<ul>
+  <li>Откройте главную ссылку на телефоне — табло показывается; добавьте в закладки.</li>
+  <li>Откройте <code>/admin.html</code> и настройте под мечеть (название, икама, объявления).</li>
+  <li>Табло в мечети: откройте главную ссылку на приставке Android TV (как в «Установка.html»),
+    полный экран, режим «киоска» — так сайт теперь не зависит от локального ПК.</li>
+  <li><b>Рассылка:</b> просто отправляйте ссылку сайта; чтобы получатели видели ваши конкретные настройки —
+    кнопка «Скопировать ссылку с настройками» в настройках.</li>
+  <li><b>Свой красивый адрес</b> (необязательно): домен вроде <code>mechet-tyumen.ru</code> покупается отдельно
+    (например, на reg.ru), подключается к GitHub Pages/Netlify за 10 минут — помогу, если нужно.</li>
+</ul>
+
+<h2>Частые вопросы</h2>
+<table>
+  <tr><th style="width:40%">Вопрос</th><th>Ответ</th></tr>
+  <tr><td>Открывается белая страница или ошибка 404</td><td>Проверьте, что <code>index.html</code> лежит в самом корне сайта и рядом есть папка <code>assets</code>. Подождите 1–3 минуты после публикации.</td></tr>
+  <tr><td>Ссылка из Способа 1 не открывается</td><td>После включения Pages подождите пару минут и обновите страницу. Проверьте в Settings → Pages, что выбрана ветка <code>main</code> и папка <code>/ (root)</code>.</td></tr>
+  <tr><td>Как менять расписание онлайн?</td><td>Открывайте <code>/admin.html</code> с телефона или компьютера. Изменения сохраняются на этом устройстве; для рассылки/переноса — «ссылка с настройками».</td></tr>
+  <tr><td>Хочу, чтобы правки сразу видели все посетители</td><td>Для этого нужен уже не статический сайт, а версия с общей базой (небольшой сервер/сервис). Это делается отдельным шагом — скажите, если нужно, обсудим варианты.</td></tr>
+  <tr><td>Хочу российский хостинг с оплатой в рублях</td><td>Подойдёт, например, Яндекс Облако (Object Storage + статический сайт). Скажите — подготовлю инструкцию под него.</td></tr>
+  <tr><td>Встроенная публикация в приложении</td><td>Когда в приложении станет доступна функция публикации сайтов — я смогу выложить одной командой и прислать ссылку.</td></tr>
+</table>
+
+<hr>
+<div class="small">Рядом с этим файлом: папка сайта <code>namaz-tablo</code>, архив <code>Намаз-Табло_для_хостинга.zip</code>
+(то же самое, упакованное для загрузки) и инструкция «Установка.html» (телефон и Android TV).
+Если что-то не получится — напишите, на каком шаге остановились, и я помогу.</div>
+
+</div>
+</body>
+</html>

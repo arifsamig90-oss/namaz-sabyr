@@ -4,7 +4,7 @@
  * из кэша, а в фоне проверяется новая версия (stale-while-revalidate).
  * Меняете файлы сайта — поднимите VERSION, чтобы телефоны обновились.
  */
-var VERSION = 'namaz-phone-20261025b';
+var VERSION = 'namaz-phone-20261025c';
 var FILES = [
   'phone.html', 'phone.webmanifest',
   'assets/phone.css', 'assets/phone.js', 'assets/phone-settings.js', 'assets/cities.js',
@@ -26,6 +26,10 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return; // облако, погода — напрямую
+  // только файлы приложения «Намаз»; табло (tablo/), APK и прочее — как обычно, из сети
+  var scope = self.registration.scope;
+  var rel = req.url.split('?')[0].indexOf(scope) === 0 ? req.url.split('?')[0].slice(scope.length) : '';
+  if (FILES.indexOf(rel) === -1) return;
   e.respondWith(caches.open(VERSION).then(function (cache) {
     // ?v=… в ссылках не мешает: ищем без параметров
     return cache.match(req, { ignoreSearch: true }).then(function (hit) {

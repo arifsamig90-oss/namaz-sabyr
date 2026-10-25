@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-accent="emerald">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Настройки — Табло намаза</title>
+<meta name="description" content="Настройки табло намаза: город, метод расчёта, ручное расписание, икама, джума, объявления и оформление.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%95%8C%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css?v=20261025">
+<!-- «На экран Домой»: открывается как отдельное приложение -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Табло Сабыр">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#0b1533">
+</head>
+<body class="admin-body">
+<div class="admin-shell">
+
+  <div class="admin-top">
+    <h1>Настройки табло</h1>
+    <span class="status" id="saveStatus">Автосохранение включено</span>
+    <a class="btn primary" href="index.html" target="_blank" rel="noopener">Открыть табло</a>
+    <a class="btn" href="calendar.html">Расписание на месяц</a>
+  </div>
+
+  <div class="infobox">
+    Настройки сохраняются автоматически в этом браузере (на этом устройстве) и сразу применяются на табло.
+    Для переноса на другое устройство используйте «Ссылку с настройками» или экспорт/импорт JSON в самом низу страницы.
+    Часовой пояс — как у устройства: табло показывает время того компьютера или телефона, где оно открыто.
+  </div>
+
+  <div class="admin-grid">
+    <nav class="admin-nav" aria-label="Разделы настроек">
+      <a href="#sec-sync">Телефон и облако</a>
+      <a href="#sec-mosque">Мечеть</a>
+      <a href="#sec-location">Город и координаты</a>
+      <a href="#sec-calc">Расчёт намаза</a>
+      <a href="#sec-tyumen">Тюмень и чтение</a>
+      <a href="#sec-manual">Ручное расписание</a>
+      <a href="#sec-iqama">Икама</a>
+      <a href="#sec-jumuah">Пятница (джума)</a>
+      <a href="#sec-announce">Объявления</a>
+      <a href="#sec-appearance">Оформление</a>
+      <a href="#sec-screens">Экраны азана и икамы</a>
+      <a href="#sec-preview">Проверка</a>
+      <a href="#sec-data">Данные и перенос</a>
+    </nav>
+
+    <div class="admin-main">
+
+      <section class="panel" id="sec-sync">
+        <h2>Управление табло: телефон и облако</h2>
+        <div class="infobox" id="syncLocal"></div>
+        <div class="field" id="pinRow" hidden>
+          <label for="remotePin">PIN‑код с экрана табло</label>
+          <div class="btn-row">
+            <input type="text" id="remotePin" inputmode="numeric" maxlength="4" style="max-width:8rem" autocomplete="off">
+            <button class="btn small" id="remotePinSave" type="button">Запомнить PIN</button>
+          </div>
+          <div class="hint">PIN показывается внизу экрана табло при запуске приставки и в её настройках (кнопка «Меню» на пульте).</div>
+        </div>
+        <hr class="sep">
+        <h3 class="mt-0">Через интернет — как в Mawaqit</h3>
+        <p class="panel-hint">Табло само раз в минуту проверяет облако и подхватывает новые настройки. Меняйте их из дома с телефона или компьютера. Как один раз подключить бесплатное облако — пошагово в файле «Облако.html».</p>
+        <div class="checkline"><input type="checkbox" id="cloudOn"><label for="cloudOn">Табло берёт настройки из облака</label></div>
+        <div class="grid3">
+          <div class="field"><label for="cloudDb">Адрес базы (Realtime Database URL)</label><input type="url" id="cloudDb" placeholder="https://…firebasedatabase.app" autocomplete="off"></div>
+          <div class="field"><label for="cloudKey">Ключ Web API</label><input type="text" id="cloudKey" autocomplete="off"></div>
+          <div class="field"><label for="cloudId">Код мечети</label><input type="text" id="cloudId" autocomplete="off"></div>
+        </div>
+        <div class="grid3">
+          <div class="field"><label for="cloudEmail">Почта администратора</label><input type="email" id="cloudEmail" autocomplete="username"></div>
+          <div class="field"><label for="cloudPass">Пароль</label><input type="password" id="cloudPass" autocomplete="current-password"></div>
+          <div class="field"><label>&nbsp;</label>
+            <div class="btn-row">
+              <button class="btn small primary" id="cloudLogin" type="button">Войти</button>
+              <button class="btn small" id="cloudLogout" type="button">Выйти</button>
+            </div>
+          </div>
+        </div>
+        <div class="checkline"><input type="checkbox" id="cloudAuto"><label for="cloudAuto">Сразу отправлять каждое изменение в облако</label></div>
+        <div class="btn-row">
+          <button class="btn" id="cloudPush" type="button">Отправить настройки в облако</button>
+          <button class="btn" id="cloudPull" type="button">Загрузить настройки из облака</button>
+        </div>
+        <div class="meta-line" id="cloudStatus"></div>
+      </section>
+
+      <section class="panel" id="sec-mosque">
+        <h2>Мечеть</h2>
+        <p class="panel-hint">Название и подписи показываются на табло.</p>
+        <div class="field"><label for="mosqueName">Название мечети</label>
+          <input type="text" id="mosqueName" maxlength="120" placeholder="Напр.: Соборная мечеть"></div>
+        <div class="field"><label for="mosqueSubtitle">Дополнительная строка</label>
+          <input type="text" id="mosqueSubtitle" maxlength="160" placeholder="Напр.: адрес, телефон, сайт"></div>
+        <div class="field">
+          <label>Логотип</label>
+          <div class="logo-line">
+            <div class="logo-preview" id="logoPreview">🕌</div>
+            <div class="grow">
+              <div class="field mt-0"><label for="logoEmoji">Символ (эмодзи)</label>
+                <input type="text" id="logoEmoji" maxlength="4" class="w-narrow"></div>
+              <div class="logo-buttons">
+                <label class="btn small" for="logoFile">Загрузить изображение…</label>
+                <input type="file" id="logoFile" accept="image/*" hidden>
+                <button class="btn small" id="logoRemove" type="button">Убрать изображение</button>
+              </div>
+              <div class="hint">Изображение до ~300 КБ. Хранится только на этом устройстве и не входит в «ссылку с настройками».</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="sec-location">
+        <h2>Город и координаты</h2>
+        <p class="panel-hint">От места зависят времена намаза. Выберите город из списка или введите координаты вручную.</p>
+        <div class="grid2">
+          <div class="field"><label for="citySelect">Город</label><select id="citySelect"></select></div>
+          <div class="field"><label for="cityName">Название на табло</label><input type="text" id="cityName" maxlength="80"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="lat">Широта, °</label><input type="number" id="lat" step="0.0001" min="-90" max="90"></div>
+          <div class="field"><label for="lng">Долгота, °</label><input type="number" id="lng" step="0.0001" min="-180" max="180"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn small" id="geoBtn" type="button">Определить по устройству</button>
+          <span class="hint" id="geoStatus"></span>
+        </div>
+      </section>
+
+      <section class="panel" id="sec-calc">
+        <h2>Расчёт намаза</h2>
+        <p class="panel-hint">Метод задаёт углы сумерек. Если сомневаетесь — уточните у имама; можно выбрать «Свой расчёт», задать углы и добавить поправки в минутах.</p>
+        <div class="grid2">
+          <div class="field"><label for="method">Метод расчёта</label><select id="method"></select></div>
+          <div class="field"><label for="asr">Расчёт Асра</label><select id="asr">
+            <option value="hanafi">Ханафи (тень вдвое длиннее предмета)</option>
+            <option value="standard">Шафии, Малики, Ханбали (тень равна предмету)</option>
+          </select></div>
+        </div>
+        <div class="grid2" id="customAngles" hidden>
+          <div class="field"><label for="fajrAngle">Угол Фаджра, °</label><input type="number" id="fajrAngle" step="0.5" min="0" max="30"></div>
+          <div class="field"><label for="ishaAngle">Угол Иша, °</label><input type="number" id="ishaAngle" step="0.5" min="0" max="30"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="highLats">Высокие широты (СПб, Казань, Урал и севернее)</label><select id="highLats">
+            <option value="angle">По углу сумерек (рекомендуется)</option>
+            <option value="midNight">Середина ночи</option>
+            <option value="seventh">Одна седьмая ночи</option>
+            <option value="none">Не применять</option>
+          </select></div>
+          <div class="field"><label for="hijriOffset">Сдвиг даты хиджры (дней)</label><select id="hijriOffset"></select></div>
+        </div>
+        <div class="field">
+          <label>Поправки к азану, минут (плюс — позже, минус — раньше)</label>
+          <div class="grid3" id="adjustRows"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="sec-tyumen">
+        <h2>Тюмень и «Читается в мечетях»</h2>
+        <p class="panel-hint">Для города Тюмень приложение использует официальные таблицы расписания (2026–2028), а для остальных лет — тот же метод расчёта, вшитый в приложение (без ограничения по годам).</p>
+        <div class="checkline"><input type="checkbox" id="tyUse"><label for="tyUse">Использовать тюменское расписание (мечети Тюмени)</label></div>
+        <div class="grid2">
+          <div class="field"><label for="tyZuhr">Время Зухра в тюменском расписании</label>
+            <select id="tyZuhr">
+              <option value="fixed">13:00 — как в печатных книгах</option>
+              <option value="zenith4">Зенит + 4 минуты — как в файле 2028 г.</option>
+            </select></div>
+          <div class="field"></div>
+        </div>
+        <hr class="sep">
+        <div class="checkline"><input type="checkbox" id="rdShow"><label for="rdShow">Показывать «Читается в мечетях»</label></div>
+        <p class="panel-hint">В тюменских таблицах время чтения = «восход − 90 минут»; в мае–августе оно же равно «сухур + 30 минут».</p>
+        <div class="grid3">
+          <div class="field"><label for="rdMode">Способ расчёта</label>
+            <select id="rdMode">
+              <option value="sunrise">Восход − N минут</option>
+              <option value="suhoor">Сухур + N минут</option>
+              <option value="fixed">Фиксированное время</option>
+            </select></div>
+          <div class="field"><label for="rdN">N, минут</label><input type="number" id="rdN" min="1" max="240" step="1"></div>
+          <div class="field"><label for="rdFixed">Фиксированное время</label><input type="time" id="rdFixed"></div>
+        </div>
+        <div class="checkline"><input type="checkbox" id="rdRamadan"><label for="rdRamadan">Скрывать в Рамадан (как в печатном календаре — там стоит «–»)</label></div>
+        <div class="checkline"><input type="checkbox" id="rdFajr"><label for="rdFajr">Азан Фаджра в мечети — во время «Читается в мечетях», икама — после сунны</label></div>
+        <div class="grid2">
+          <div class="field"><label for="rdIqama">Икама Фаджра после чтения, минут</label><input type="number" id="rdIqama" min="1" max="60" step="1"></div>
+          <div class="field"></div>
+        </div>
+        <p class="panel-hint">Если снять «Показывать „Читается в мечетях“» (или в Рамадан) — действуют обычное время Фаджра и икама из раздела «Икама».</p>
+        <div class="checkline"><input type="checkbox" id="rdWinter"><label for="rdWinter">Декабрь–январь показывать 07:00 (как в печатной книге Тюмени)</label></div>
+        <div class="meta-line" id="rdPreview"></div>
+      </section>
+
+      <section class="panel" id="sec-manual">
+        <h2>Ручное расписание</h2>
+        <p class="panel-hint">Если нужно задать времена вручную (например, по календарю вашей общины) — включите этот режим, расчёт по координатам отключится.</p>
+        <div class="checkline"><input type="checkbox" id="manualEnabled"><label for="manualEnabled">Использовать ручное расписание</label></div>
+        <div class="grid3" id="manualTimes"></div>
+      </section>
+
+      <section class="panel" id="sec-iqama">
+        <h2>Икама</h2>
+        <p class="panel-hint">Для каждой молитвы: икама после азана через N минут или в точное время.</p>
+        <div id="iqamaRows"></div>
+      </section>
+
+      <section class="panel" id="sec-jumuah">
+        <h2>Пятничная молитва (джума)</h2>
+        <p class="panel-hint">Показывается на табло как отдельный блок. Можно указать одну или несколько хутб.</p>
+        <div class="checkline"><input type="checkbox" id="jumuahEnabled"><label for="jumuahEnabled">Показывать джуму на табло</label></div>
+        <div id="jumuahRows"></div>
+        <button class="btn small" id="jumuahAdd" type="button">+ Добавить время</button>
+      </section>
+
+      <section class="panel" id="sec-announce">
+        <h2>Объявления</h2>
+        <p class="panel-hint">Каждая строка — отдельное объявление. Они бегут внизу табло.</p>
+        <div class="field"><label for="announcements">Тексты объявлений (по одному на строку)</label>
+          <textarea id="announcements" rows="6" placeholder="Напр.: Напоминание: в пятницу начинается сбор пожертвований на ремонт"></textarea></div>
+        <div class="grid2">
+          <div class="field"><label for="tickerSpeed">Скорость бегущей строки</label><select id="tickerSpeed">
+            <option value="slow">Медленно</option>
+            <option value="normal">Обычно</option>
+            <option value="fast">Быстро</option>
+          </select></div>
+          <div class="field"><label for="footerNote">Дополнительная строка внизу (адрес, телефон…)</label>
+            <input type="text" id="footerNote" maxlength="200"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="sec-appearance">
+        <h2>Оформление</h2>
+        <div class="grid2">
+          <div class="field"><label for="palette">Тема оформления</label><select id="palette">
+            <option value="emerald-dark">Изумрудная (тёмная)</option>
+            <option value="midnight">Полночь (тёмно-синяя)</option>
+            <option value="graphite">Графит (тёмная нейтральная)</option>
+            <option value="ocean">Океан (тёмно-бирюзовая)</option>
+            <option value="wine">Бордо (тёмная винная)</option>
+            <option value="cream">Крем (светлая)</option>
+            <option value="sand">Песок (светлая тёплая)</option>
+            <option value="mint">Мята (светлая зелёная)</option>
+          </select></div>
+          <div class="field"><label>Акцентный цвет</label>
+            <div class="swatches" id="swatches">
+              <div class="swatch emerald" data-accent="emerald" role="button" tabindex="0" title="Изумруд" aria-label="Изумруд"></div>
+              <div class="swatch teal" data-accent="teal" role="button" tabindex="0" title="Бирюза" aria-label="Бирюза"></div>
+              <div class="swatch sky" data-accent="sky" role="button" tabindex="0" title="Небо" aria-label="Небо"></div>
+              <div class="swatch indigo" data-accent="indigo" role="button" tabindex="0" title="Индиго" aria-label="Индиго"></div>
+              <div class="swatch violet" data-accent="violet" role="button" tabindex="0" title="Фиалка" aria-label="Фиалка"></div>
+              <div class="swatch rose" data-accent="rose" role="button" tabindex="0" title="Роза" aria-label="Роза"></div>
+              <div class="swatch gold" data-accent="gold" role="button" tabindex="0" title="Золото" aria-label="Золото"></div>
+              <div class="swatch amber" data-accent="amber" role="button" tabindex="0" title="Янтарь" aria-label="Янтарь"></div>
+              <div class="swatch burgundy" data-accent="burgundy" role="button" tabindex="0" title="Бордо" aria-label="Бордо"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="boardStyle">Стиль табло (index.html)</label><select id="boardStyle">
+            <option value="mosque">Мечеть «Сабыр» — синий, золото, тюльпан</option>
+            <option value="accent">По акцентному цвету</option>
+          </select></div>
+          <div class="field"></div>
+        </div>
+        <div class="checkline"><input type="checkbox" id="showSeconds"><label for="showSeconds">Показывать секунды на часах</label></div>
+        <div class="checkline"><input type="checkbox" id="showHijri"><label for="showHijri">Показывать дату хиджры</label></div>
+        <div class="checkline"><input type="checkbox" id="showSunrise"><label for="showSunrise">Показывать восход</label></div>
+        <div class="checkline"><input type="checkbox" id="showWeather"><label for="showWeather">Показывать погоду (нужен интернет; берётся по координатам города)</label></div>
+        <div class="checkline"><input type="checkbox" id="showZenith"><label for="showZenith">Показывать «Зенит» (солнечный полдень) на табло</label></div>
+        <hr class="sep">
+        <div class="checkline"><input type="checkbox" id="atEnabled"><label for="atEnabled">Авто‑смена темы «день/ночь» (на табло)</label></div>
+        <p class="panel-hint">Включите — и табло само будет переключать выбранные темы: днём одну, ночью другую. Автоматику можно в любой момент приостановить, сняв галочку.</p>
+        <div class="grid2">
+          <div class="field"><label for="atDay">Дневная тема</label><select id="atDay">
+            <option value="cream">Крем (светлая)</option>
+            <option value="sand">Песок (светлая тёплая)</option>
+            <option value="mint">Мята (светлая зелёная)</option>
+            <option value="emerald-dark">Изумрудная (тёмная)</option>
+            <option value="midnight">Полночь (тёмно-синяя)</option>
+            <option value="graphite">Графит (тёмная нейтральная)</option>
+            <option value="ocean">Океан (тёмно-бирюзовая)</option>
+            <option value="wine">Бордо (тёмная винная)</option>
+          </select></div>
+          <div class="field"><label for="atNight">Ночная тема</label><select id="atNight">
+            <option value="emerald-dark">Изумрудная (тёмная)</option>
+            <option value="midnight">Полночь (тёмно-синяя)</option>
+            <option value="graphite">Графит (тёмная нейтральная)</option>
+            <option value="ocean">Океан (тёмно-бирюзовая)</option>
+            <option value="wine">Бордо (тёмная винная)</option>
+            <option value="cream">Крем (светлая)</option>
+            <option value="sand">Песок (светлая тёплая)</option>
+            <option value="mint">Мята (светлая зелёная)</option>
+          </select></div>
+        </div>
+        <div class="grid3">
+          <div class="field"><label for="atMode">Когда переключать</label><select id="atMode">
+            <option value="clock">По часам</option>
+            <option value="sun">По солнцу (восход / закат)</option>
+          </select></div>
+          <div class="field at-clock"><label for="atDayStart">День начинается в</label><input type="time" id="atDayStart"></div>
+          <div class="field at-clock"><label for="atNightStart">Ночь начинается в</label><input type="time" id="atNightStart"></div>
+        </div>
+        <div class="meta-line" id="atStatus"></div>
+        <hr class="sep">
+        <div class="field"><label>Фон табло</label>
+          <p class="panel-hint mt-0">Выберите готовый фон или поставьте свою картинку (обои, фото мечети). Текст на фоне станет светлым, а затемнение и размытие помогут читаемости.</p>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="bgMode">Фон</label><select id="bgMode">
+            <option value="theme">Как в теме (по умолчанию)</option>
+            <option value="image">Своя картинка…</option>
+            <optgroup label="Готовые фоны">
+              <option value="stars">Звёздное небо</option>
+              <option value="sea">Море</option>
+              <option value="sunset">Закат</option>
+              <option value="aurora">Северное сияние</option>
+              <option value="ornament">Орнамент</option>
+            </optgroup>
+          </select></div>
+          <div class="field"><label for="bgDim">Затемнение, %</label><input type="range" id="bgDim" min="0" max="90" step="5"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="bgBlur">Размытие фона, px</label><input type="range" id="bgBlur" min="0" max="20" step="1"></div>
+          <div class="field"><label>Картинка</label>
+            <div class="logo-buttons">
+              <label class="btn small" for="bgFile">Загрузить картинку…</label>
+              <input type="file" id="bgFile" accept="image/*" hidden>
+              <button class="btn small" id="bgRemove" type="button">Убрать картинку</button>
+            </div>
+            <div class="hint">До ~600 КБ. Хранится на этом устройстве и не входит в «ссылку с настройками».</div>
+          </div>
+        </div>
+        <div class="bg-preview" id="bgPreview" hidden></div>
+      </section>
+
+      <section class="panel" id="sec-screens">
+        <h2>Экраны азана, икамы и чтения</h2>
+        <p class="panel-hint">Как в Mawaqit: в момент азана табло на весь экран показывает «Азан», затем отсчёт до икамы, после икамы — тёмный экран на время намаза. Перед «Читается в мечетях» сбоку выезжает окно с отсчётом. Клик по экрану или Esc — закрыть.</p>
+        <div class="checkline"><input type="checkbox" id="scAdhan"><label for="scAdhan">Экран «Азан»</label></div>
+        <div class="checkline"><input type="checkbox" id="scIqama"><label for="scIqama">Отсчёт до икамы на весь экран</label></div>
+        <div class="checkline"><input type="checkbox" id="scPrayer"><label for="scPrayer">Тёмный экран во время намаза</label></div>
+        <div class="checkline"><input type="checkbox" id="scRead"><label for="scRead">Экран «Читается в мечетях» в момент чтения</label></div>
+        <div class="grid2">
+          <div class="field"><label for="scAdhanSec">«Азан» показывать, секунд</label><input type="number" id="scAdhanSec" min="10" max="600" step="10"></div>
+          <div class="field"><label for="scPrayerMin">Тёмный экран, минут</label><input type="number" id="scPrayerMin" min="1" max="60" step="1"></div>
+          <div class="field"><label for="scReadSec">«Читается в мечетях» на весь экран, секунд</label><input type="number" id="scReadSec" min="10" max="1800" step="10"></div>
+          <div class="field"><label for="scReadWarn">Окно «скоро чтение» — за сколько минут (0 — не показывать)</label><input type="number" id="scReadWarn" min="0" max="120" step="1"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="sec-preview">
+        <h2>Проверка</h2>
+        <p class="panel-hint">Так выглядит результат расчёта на сегодня. Не забудьте открыть само табло.</p>
+        <table class="preview-table">
+          <thead><tr><th>Намаз</th><th>Азан</th><th>Икама</th></tr></thead>
+          <tbody id="previewBody"></tbody>
+        </table>
+        <div class="meta-line" id="previewMeta"></div>
+        <div class="meta-line" id="previewNext"></div>
+      </section>
+
+      <section class="panel" id="sec-data">
+        <h2>Данные и перенос</h2>
+        <div class="field">
+          <label>Ссылка с настройками</label>
+          <div class="btn-row">
+            <button class="btn" id="shareBtn" type="button">Скопировать ссылку с настройками</button>
+          </div>
+          <div class="hint">Откройте ссылку на устройстве с табло — настройки применятся автоматически. Изображение логотипа в ссылку не входит.</div>
+        </div>
+        <div class="field">
+          <label>Файл настроек</label>
+          <div class="btn-row">
+            <button class="btn" id="exportBtn" type="button">Экспорт (JSON)</button>
+            <button class="btn" id="importBtn" type="button">Импорт…</button>
+            <input type="file" id="importFile" accept="application/json,.json" hidden>
+          </div>
+        </div>
+        <div class="field">
+          <label>Опасная зона</label>
+          <div class="btn-row">
+            <button class="btn danger" id="resetBtn" type="button">Сбросить всё</button>
+          </div>
+        </div>
+        <div class="meta-line" id="dataStatus"></div>
+        <div class="meta-line">Как поставить табло на телефон и на Android TV: <a href="Установка.html" target="_blank" rel="noopener">инструкция по установке</a></div>
+        <div class="meta-line">Как выложить сайт в интернет (хостинг): <a href="Хостинг.html" target="_blank" rel="noopener">инструкция по публикации</a></div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script src="assets/cities.js?v=20261025"></script>
+<script src="assets/store.js?v=20261025"></script>
+<script src="assets/prayer-times.js?v=20261025"></script>
+<script src="assets/tyumen.js?v=20261025"></script>
+<script src="assets/backgrounds.js?v=20261025"></script>
+<script src="assets/schedule.js?v=20261025"></script>
+<script src="assets/cloud.js?v=20261025"></script>
+<script src="assets/admin.js?v=20261025"></script>
+</body>
+</html>

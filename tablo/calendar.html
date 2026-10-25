@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-accent="emerald">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Расписание намаза на месяц</title>
+<meta name="description" content="Расписание намаза на месяц: таблица с временами азана и икамы, датами хиджры и джумой. Можно распечатать.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%95%8C%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css?v=20261025">
+</head>
+<body class="cal-body">
+<div class="cal-shell">
+
+  <div class="cal-top no-print">
+    <button class="btn small" id="prevBtn" type="button" aria-label="Предыдущий месяц">←</button>
+    <input type="month" id="monthInput" aria-label="Месяц">
+    <button class="btn small" id="nextBtn" type="button" aria-label="Следующий месяц">→</button>
+    <label class="checkline"><input type="checkbox" id="iqamaCheck"> показывать икаму</label>
+    <label class="checkline"><input type="checkbox" id="readCheck"> «Читается в мечетях»</label>
+    <label class="checkline"><input type="checkbox" id="zenithCheck"> «Зенит»</label>
+    <button class="btn small" id="printBtn" type="button">Печать</button>
+    <a class="btn small" href="index.html">Табло</a>
+    <a class="btn small" href="admin.html">Настройки</a>
+  </div>
+
+  <div class="cal-title">
+    <h1 id="calTitle">ВРЕМЯ НАМАЗА</h1>
+    <div class="cal-sub" id="calSub"></div>
+  </div>
+
+  <table class="cal-table">
+    <thead>
+      <tr id="calHead"></tr>
+    </thead>
+    <tbody id="calBody"></tbody>
+  </table>
+
+  <div class="cal-meta" id="calMeta"></div>
+</div>
+
+<script src="assets/store.js?v=20261025"></script>
+<script src="assets/prayer-times.js?v=20261025"></script>
+<script src="assets/tyumen.js?v=20261025"></script>
+<script src="assets/schedule.js?v=20261025"></script>
+<script src="assets/calendar.js?v=20261025"></script>
+</body>
+</html>
