@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Приложение «Намаз» — мечеть «Сабыр»</title>
+<meta name="description" content="Скачать приложение времени намаза мечети «Сабыр» (Тюмень) для iPhone и Android.">
+<meta name="theme-color" content="#05070f">
+<link rel="icon" href="../assets/icon-192.png">
+<link rel="apple-touch-icon" href="../assets/icon-180.png">
+<style>
+  :root {
+    --bg: #05070f; --card: rgba(255,255,255,.055); --hair: rgba(255,255,255,.1);
+    --text: #f5f3ee; --muted: #8e93a6; --gold: #e3bd62;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; color: var(--text);
+    background: radial-gradient(90% 45% at 50% -10%, rgba(227,189,98,.16), transparent 70%), var(--bg);
+    font: 16px/1.45 -apple-system, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+    padding: max(28px, env(safe-area-inset-top)) 16px 40px;
+  }
+  main { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; }
+  header { text-align: center; margin-bottom: 18px; }
+  header img { width: 84px; height: 84px; }
+  h1 { font-size: 26px; font-weight: 650; margin: 10px 0 2px; letter-spacing: -.01em; }
+  header p { color: var(--muted); margin: 0; }
+  .card { background: var(--card); border-radius: 20px; padding: 20px; margin-top: 14px; }
+  .card.mine { box-shadow: inset 0 0 0 1.5px var(--gold); }
+  .head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .head svg { width: 34px; height: 34px; flex: none; fill: var(--text); }
+  .head h2 { margin: 0; font-size: 21px; font-weight: 650; }
+  .head span { display: block; color: var(--muted); font-size: 14px; }
+  .btn {
+    display: block; text-align: center; padding: 15px 16px; border-radius: 14px; text-decoration: none;
+    background: var(--gold); color: #1b1606; font-weight: 650; font-size: 17px;
+  }
+  ol { margin: 14px 0 0; padding-left: 20px; color: var(--muted); font-size: 14.5px; }
+  ol li { margin: 5px 0; }
+  b { color: var(--text); font-weight: 600; }
+  .qr { display: none; text-align: center; color: var(--muted); font-size: 14px; margin-top: 22px; }
+  .qr img { width: 180px; height: 180px; border-radius: 10px; display: block; margin: 0 auto 8px; }
+  @media (min-width: 900px) and (hover: hover) { .qr { display: block; } }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 26px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="../assets/logo.png" alt="">
+    <h1>Приложение «Намаз»</h1>
+    <p>Мечеть «Сабыр», Тюмень · время намаза, икама, джума, кибла</p>
+  </header>
+
+  <section class="card" id="ios">
+    <div class="head">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.62c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.47.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.27-1.6 2.78-.41 6.88 1.15 9.13.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.78.74 2.99.72 1.24-.02 2.02-1.12 2.77-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.39-.92-2.41-3.65zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.02.61-2.67 1.37-.58.67-1.1 1.76-.96 2.8 1.02.08 2.06-.52 2.69-1.28z"/></svg>
+      <div><h2>iPhone</h2><span>Работает без интернета, ставится на экран «Домой»</span></div>
+    </div>
+    <a class="btn" href="../phone.html">Открыть приложение</a>
+    <ol>
+      <li>Откройте эту страницу в <b>Safari</b> и нажмите «Открыть приложение».</li>
+      <li>Нажмите <b>«Поделиться»</b> (квадрат со стрелкой) → <b>«На экран „Домой“»</b> → <b>«Добавить»</b>.</li>
+      <li>На экране появится значок <b>«Намаз»</b> — открывайте приложение с него.</li>
+    </ol>
+  </section>
+
+  <section class="card" id="android">
+    <div class="head">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22a11.4 11.4 0 0 0-9.84 0L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
+      <div><h2>Android</h2><span>Уведомления и азан, кибла, виджеты</span></div>
+    </div>
+    <a class="btn" href="../download/Namaz-Sabyr.apk" download>Скачать приложение</a>
+    <ol>
+      <li>Нажмите «Скачать приложение» и откройте файл из <b>«Загрузок»</b>.</li>
+      <li>Если телефон спросит — разрешите установку из этого источника и нажмите <b>«Установить»</b>.</li>
+    </ol>
+  </section>
+
+  <div class="qr">
+    <img src="qr.svg" alt="QR-код этой страницы">
+    Наведите камеру телефона на QR-код
+  </div>
+
+  <footer>Мечеть «Сабыр» · г. Тюмень</footer>
+</main>
+<script>
+  /* свой телефон — первым и с золотой рамкой */
+  (function () {
+    var ua = navigator.userAgent;
+    var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    var mine = ios ? 'ios' : (/Android/i.test(ua) ? 'android' : '');
+    if (!mine) return;
+    var el = document.getElementById(mine);
+    el.classList.add('mine');
+    if (mine === 'android') el.parentNode.insertBefore(el, document.getElementById('ios'));
+  })();
+</script>
+</body>
+</html>

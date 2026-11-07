@@ -173,6 +173,24 @@ html[data-style="mosque"] .mw-bg:not(.has-image)::before {
 .bx-list { font-family: var(--font-num); font-size: calc(var(--u) * 2.5); font-weight: 700; line-height: 1.25; font-variant-numeric: tabular-nums; }
 .bx-list small { font-family: var(--font); font-size: .5em; font-weight: 500; color: var(--muted); margin-right: .4em; }
 .mw-box.passed { opacity: .55; }
+/* QR-код приложения для прихожан */
+.mw-box.app {
+  display: flex; align-items: center; gap: calc(var(--u) * .9);
+  padding: calc(var(--u) * .7) calc(var(--u) * 1.1) calc(var(--u) * .7) calc(var(--u) * .7); text-align: left;
+}
+.mw-box.app[hidden] { display: none; }
+.app-qr {
+  width: calc(var(--u) * 9.4); height: calc(var(--u) * 9.4); flex: none;
+  border-radius: calc(var(--u) * .5); background: #fff;
+  image-rendering: pixelated;
+}
+.app-text { min-width: 0; line-height: 1.2; }
+.app-title { font-size: calc(var(--u) * 1.45); font-weight: 700; }
+.app-sub { font-size: calc(var(--u) * 1.25); white-space: nowrap; color: var(--accent-2); font-weight: 600; margin-top: .2em; }
+.app-hint { font-size: calc(var(--u) * 1.1); color: var(--muted); margin-top: .4em; white-space: nowrap; }
+/* Зенит и QR-код сменяют друг друга — одной высоты, чтобы часы не прыгали */
+#boxZenith, .mw-box.app { min-height: calc(var(--u) * 11); }
+#boxZenith:not([hidden]) { display: flex; flex-direction: column; justify-content: center; }
 .mw-box.today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
 
 /* «Читается в мечетях» — выделенный блок */

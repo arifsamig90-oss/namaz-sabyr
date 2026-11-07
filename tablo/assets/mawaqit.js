@@ -265,8 +265,20 @@
       $('boxJumuah').classList.toggle('today', now().getDay() === 5);
     }
 
-    $('boxZenith').hidden = !(ok && cfg.display.showZenith && schedule.zenith);
+    zenithOn = !!(ok && cfg.display.showZenith && schedule.zenith);
+    rotateSide(now().getTime());
     if (schedule && schedule.zenith) $('tZenith').textContent = PT.fmtHM(schedule.zenith);
+  }
+
+  /* QR-код приложения для прихожан: если «Зенит» включён — по очереди с ним
+     (20 секунд QR-код, 10 секунд Зенит), иначе QR-код виден всё время */
+  var zenithOn = false;
+  function rotateSide(nowMs) {
+    var appOn = cfg.display.showAppQr !== false;
+    var showApp = appOn && (!zenithOn || (Math.floor(nowMs / 1000) % 30) < 20);
+    if ($('boxApp').hidden === showApp) $('boxApp').hidden = !showApp;
+    var showZen = zenithOn && !showApp;
+    if ($('boxZenith').hidden === showZen) $('boxZenith').hidden = !showZen;
   }
 
   /* ---------- состояние плиток и отсчёт ---------- */
@@ -434,6 +446,7 @@
     if (cfg.display.showSeconds) roll($('ss'), p2(n.getSeconds()));
     if (LITE) $('clock').classList.toggle('dim', n.getSeconds() % 2 === 1); /* мигание двоеточия без CSS-анимации */
     updateTiles(nowMs);
+    rotateSide(nowMs);
     updateNext(nowMs);
     updateOverlay(n, nowMs);
     updatePopup(nowMs);

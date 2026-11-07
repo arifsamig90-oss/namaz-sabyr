@@ -61,6 +61,7 @@
       showHijri: true,
       showSunrise: true,
       showZenith: true,
+      showAppQr: true,
       weather: true,
       tickerSpeed: 'normal',
       announcements: [
@@ -225,6 +226,7 @@
       cfg.display.showHijri = bool(raw.display.showHijri, cfg.display.showHijri);
       cfg.display.showSunrise = bool(raw.display.showSunrise, cfg.display.showSunrise);
       cfg.display.showZenith = bool(raw.display.showZenith, cfg.display.showZenith);
+      cfg.display.showAppQr = bool(raw.display.showAppQr, cfg.display.showAppQr);
       cfg.display.weather = bool(raw.display.weather, cfg.display.weather);
       cfg.display.tickerSpeed = pick(raw.display.tickerSpeed, SPEEDS, cfg.display.tickerSpeed);
       if (Array.isArray(raw.display.announcements)) {

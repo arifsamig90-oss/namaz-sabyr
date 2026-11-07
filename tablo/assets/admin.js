@@ -371,6 +371,7 @@
     $('#showHijri').checked = cfg.display.showHijri;
     $('#showSunrise').checked = cfg.display.showSunrise;
     $('#showZenith').checked = cfg.display.showZenith;
+    $('#showAppQr').checked = cfg.display.showAppQr;
     $('#showWeather').checked = cfg.display.weather;
     syncSwatches();
     applyTheme();
@@ -621,6 +622,7 @@
     bind($('#showHijri'), function () { cfg.display.showHijri = $('#showHijri').checked; });
     bind($('#showSunrise'), function () { cfg.display.showSunrise = $('#showSunrise').checked; });
     bind($('#showZenith'), function () { cfg.display.showZenith = $('#showZenith').checked; });
+    bind($('#showAppQr'), function () { cfg.display.showAppQr = $('#showAppQr').checked; });
     bind($('#showWeather'), function () { cfg.display.weather = $('#showWeather').checked; });
 
     bind($('#tyUse'), function () { cfg.tyumen.useData = $('#tyUse').checked; });
