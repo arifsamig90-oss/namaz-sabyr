@@ -180,7 +180,7 @@ html[data-style="mosque"] .mw-bg:not(.has-image)::before {
 }
 .mw-box.app[hidden] { display: none; }
 .app-qr {
-  width: calc(var(--u) * 9.4); height: calc(var(--u) * 9.4); flex: none;
+  width: calc(var(--u) * 8.6); height: calc(var(--u) * 8.6); flex: none;
   border-radius: calc(var(--u) * .5); background: #fff;
   image-rendering: pixelated;
 }
@@ -188,8 +188,8 @@ html[data-style="mosque"] .mw-bg:not(.has-image)::before {
 .app-title { font-size: calc(var(--u) * 1.45); font-weight: 700; }
 .app-sub { font-size: calc(var(--u) * 1.25); white-space: nowrap; color: var(--accent-2); font-weight: 600; margin-top: .2em; }
 .app-hint { font-size: calc(var(--u) * 1.1); color: var(--muted); margin-top: .4em; white-space: nowrap; }
-/* Зенит и QR-код сменяют друг друга — одной высоты, чтобы часы не прыгали */
-#boxZenith, .mw-box.app { min-height: calc(var(--u) * 11); }
+/* Зенит и QR-код одной высоты */
+#boxZenith, .mw-box.app { min-height: calc(var(--u) * 9.6); }
 #boxZenith:not([hidden]) { display: flex; flex-direction: column; justify-content: center; }
 .mw-box.today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
 

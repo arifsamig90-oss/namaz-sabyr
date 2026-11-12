@@ -257,7 +257,7 @@
     }
 
     var jm = ok && cfg.jumuah.enabled && schedule.jumuah.length;
-    $('boxJumuah').hidden = !jm;
+    $('boxJumuah').hidden = !jm || cfg.display.showAppQr !== false;
     if (jm) {
       $('tJumuah').innerHTML = schedule.jumuah.map(function (j) {
         return '<div><small>' + esc(j.label) + '</small>' + PT.fmtHM(j.time) + '</div>';
@@ -270,15 +270,12 @@
     if (schedule && schedule.zenith) $('tZenith').textContent = PT.fmtHM(schedule.zenith);
   }
 
-  /* QR-код приложения для прихожан: если «Зенит» включён — по очереди с ним
-     (20 секунд QR-код, 10 секунд Зенит), иначе QR-код виден всё время */
+  /* QR-код приложения для прихожан стоит на месте блока «Джума» */
   var zenithOn = false;
-  function rotateSide(nowMs) {
+  function rotateSide() {
     var appOn = cfg.display.showAppQr !== false;
-    var showApp = appOn && (!zenithOn || (Math.floor(nowMs / 1000) % 30) < 20);
-    if ($('boxApp').hidden === showApp) $('boxApp').hidden = !showApp;
-    var showZen = zenithOn && !showApp;
-    if ($('boxZenith').hidden === showZen) $('boxZenith').hidden = !showZen;
+    if ($('boxApp').hidden === appOn) $('boxApp').hidden = !appOn;
+    if ($('boxZenith').hidden === zenithOn) $('boxZenith').hidden = !zenithOn;
   }
 
   /* ---------- состояние плиток и отсчёт ---------- */
