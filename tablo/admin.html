@@ -6,7 +6,7 @@
 <title>Настройки — Табло намаза</title>
 <meta name="description" content="Настройки табло намаза: город, метод расчёта, ручное расписание, икама, джума, объявления и оформление.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%95%8C%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/styles.css?v=20261112">
+<link rel="stylesheet" href="assets/styles.css?v=20261112b">
 <!-- «На экран Домой»: открывается как отдельное приложение -->
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
@@ -161,7 +161,7 @@
       </section>
 
       <section class="panel" id="sec-tyumen">
-        <h2>Тюмень и «Читается в мечетях»</h2>
+        <h2>Тюмень и «Читается в мечети»</h2>
         <p class="panel-hint">Для города Тюмень приложение использует официальные таблицы расписания (2026–2028), а для остальных лет — тот же метод расчёта, вшитый в приложение (без ограничения по годам).</p>
         <div class="checkline"><input type="checkbox" id="tyUse"><label for="tyUse">Использовать тюменское расписание (мечети Тюмени)</label></div>
         <div class="grid2">
@@ -173,7 +173,7 @@
           <div class="field"></div>
         </div>
         <hr class="sep">
-        <div class="checkline"><input type="checkbox" id="rdShow"><label for="rdShow">Показывать «Читается в мечетях»</label></div>
+        <div class="checkline"><input type="checkbox" id="rdShow"><label for="rdShow">Показывать «Читается в мечети»</label></div>
         <p class="panel-hint">В тюменских таблицах время чтения = «восход − 90 минут»; в мае–августе оно же равно «сухур + 30 минут».</p>
         <div class="grid3">
           <div class="field"><label for="rdMode">Способ расчёта</label>
@@ -186,12 +186,12 @@
           <div class="field"><label for="rdFixed">Фиксированное время</label><input type="time" id="rdFixed"></div>
         </div>
         <div class="checkline"><input type="checkbox" id="rdRamadan"><label for="rdRamadan">Скрывать в Рамадан (как в печатном календаре — там стоит «–»)</label></div>
-        <div class="checkline"><input type="checkbox" id="rdFajr"><label for="rdFajr">Азан Фаджра в мечети — во время «Читается в мечетях», икама — после сунны</label></div>
+        <div class="checkline"><input type="checkbox" id="rdFajr"><label for="rdFajr">Азан Фаджра в мечети — во время «Читается в мечети», икама — после сунны</label></div>
         <div class="grid2">
           <div class="field"><label for="rdIqama">Икама Фаджра после чтения, минут</label><input type="number" id="rdIqama" min="1" max="60" step="1"></div>
           <div class="field"></div>
         </div>
-        <p class="panel-hint">Если снять «Показывать „Читается в мечетях“» (или в Рамадан) — действуют обычное время Фаджра и икама из раздела «Икама».</p>
+        <p class="panel-hint">Если снять «Показывать „Читается в мечети“» (или в Рамадан) — действуют обычное время Фаджра и икама из раздела «Икама».</p>
         <div class="checkline"><input type="checkbox" id="rdWinter"><label for="rdWinter">Декабрь–январь показывать 07:00 (как в печатной книге Тюмени)</label></div>
         <div class="meta-line" id="rdPreview"></div>
       </section>
@@ -341,15 +341,15 @@
 
       <section class="panel" id="sec-screens">
         <h2>Экраны азана, икамы и чтения</h2>
-        <p class="panel-hint">Как в Mawaqit: в момент азана табло на весь экран показывает «Азан», затем отсчёт до икамы, после икамы — тёмный экран на время намаза. Перед «Читается в мечетях» сбоку выезжает окно с отсчётом. Клик по экрану или Esc — закрыть.</p>
+        <p class="panel-hint">Как в Mawaqit: в момент азана табло на весь экран показывает «Азан», затем отсчёт до икамы, после икамы — тёмный экран на время намаза. Перед «Читается в мечети» сбоку выезжает окно с отсчётом. Клик по экрану или Esc — закрыть.</p>
         <div class="checkline"><input type="checkbox" id="scAdhan"><label for="scAdhan">Экран «Азан»</label></div>
         <div class="checkline"><input type="checkbox" id="scIqama"><label for="scIqama">Отсчёт до икамы на весь экран</label></div>
         <div class="checkline"><input type="checkbox" id="scPrayer"><label for="scPrayer">Тёмный экран во время намаза</label></div>
-        <div class="checkline"><input type="checkbox" id="scRead"><label for="scRead">Экран «Читается в мечетях» в момент чтения</label></div>
+        <div class="checkline"><input type="checkbox" id="scRead"><label for="scRead">Экран «Читается в мечети» в момент чтения</label></div>
         <div class="grid2">
           <div class="field"><label for="scAdhanSec">«Азан» показывать, секунд</label><input type="number" id="scAdhanSec" min="10" max="600" step="10"></div>
           <div class="field"><label for="scPrayerMin">Тёмный экран, минут</label><input type="number" id="scPrayerMin" min="1" max="60" step="1"></div>
-          <div class="field"><label for="scReadSec">«Читается в мечетях» на весь экран, секунд</label><input type="number" id="scReadSec" min="10" max="1800" step="10"></div>
+          <div class="field"><label for="scReadSec">«Читается в мечети» на весь экран, секунд</label><input type="number" id="scReadSec" min="10" max="1800" step="10"></div>
           <div class="field"><label for="scReadWarn">Окно «скоро чтение» — за сколько минут (0 — не показывать)</label><input type="number" id="scReadWarn" min="0" max="120" step="1"></div>
         </div>
       </section>
@@ -397,13 +397,13 @@
   </div>
 </div>
 
-<script src="assets/cities.js?v=20261112"></script>
-<script src="assets/store.js?v=20261112"></script>
-<script src="assets/prayer-times.js?v=20261112"></script>
-<script src="assets/tyumen.js?v=20261112"></script>
-<script src="assets/backgrounds.js?v=20261112"></script>
-<script src="assets/schedule.js?v=20261112"></script>
-<script src="assets/cloud.js?v=20261112"></script>
-<script src="assets/admin.js?v=20261112"></script>
+<script src="assets/cities.js?v=20261112b"></script>
+<script src="assets/store.js?v=20261112b"></script>
+<script src="assets/prayer-times.js?v=20261112b"></script>
+<script src="assets/tyumen.js?v=20261112b"></script>
+<script src="assets/backgrounds.js?v=20261112b"></script>
+<script src="assets/schedule.js?v=20261112b"></script>
+<script src="assets/cloud.js?v=20261112b"></script>
+<script src="assets/admin.js?v=20261112b"></script>
 </body>
 </html>

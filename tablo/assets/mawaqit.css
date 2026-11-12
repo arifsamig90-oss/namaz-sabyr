@@ -1,7 +1,7 @@
 /*!
  * mawaqit.css — табло в стиле Mawaqit (index.html).
  * Крупные часы с «выезжающими» секундами, плитки намазов снизу,
- * боковые блоки (восход, «Читается в мечетях», джума, зенит),
+ * боковые блоки (восход, «Читается в мечети», джума, зенит),
  * полноэкранные экраны азана / икамы / намаза / чтения.
  * Размеры — в единицах экрана: одинаково на ТВ, мониторе и телефоне.
  */
@@ -193,7 +193,7 @@ html[data-style="mosque"] .mw-bg:not(.has-image)::before {
 #boxZenith:not([hidden]) { display: flex; flex-direction: column; justify-content: center; }
 .mw-box.today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
 
-/* «Читается в мечетях» — выделенный блок */
+/* «Читается в мечети» — выделенный блок */
 .mw-box.read {
   background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 34%, rgba(0,0,0,.4)), rgba(0,0,0,.45));
   border-color: color-mix(in srgb, var(--accent) 70%, transparent);
@@ -348,7 +348,7 @@ html[data-style="mosque"] .mw-ticker-item::after { content: ""; width: .9em; hei
 .mw-ticker-item::after { content: "✦"; position: absolute; right: -.4em; color: var(--accent); }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
-/* ---------- всплывающее окно «Скоро читается в мечетях» ---------- */
+/* ---------- всплывающее окно «Скоро читается в мечети» ---------- */
 .mw-popup {
   position: fixed; z-index: 5;
   right: calc(var(--u) * 2.2); top: 50%;

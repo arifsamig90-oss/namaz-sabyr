@@ -3,7 +3,7 @@
  *
  * Расписание считается тем же движком, что и табло мечети (schedule.js,
  * tyumen.js), поэтому времена совпадают с табло. Если у мечети подключено
- * облако, настройки (икама, джума, «Читается в мечетях») приходят оттуда.
+ * облако, настройки (икама, джума, «Читается в мечети») приходят оттуда.
  *
  * В приложении для Android страница отдаёт список уведомлений на 120 дней
  * вперёд в window.NamazPhone (PhoneActivity.java), а будильники ставит
@@ -18,7 +18,7 @@
 
   var $ = function (s) { return document.getElementById(s); };
   var MAIN_IDS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-  var NAMES = { fajr: 'Фаджр', sunrise: 'Восход', dhuhr: 'Зухр', asr: 'Аср', maghrib: 'Магриб', isha: 'Иша', read: 'Читается в мечетях', jumuah: 'Джума', zenith: 'Зенит' };
+  var NAMES = { fajr: 'Фаджр', sunrise: 'Восход', dhuhr: 'Зухр', asr: 'Аср', maghrib: 'Магриб', isha: 'Иша', read: 'Читается в мечети', jumuah: 'Джума', zenith: 'Зенит' };
   var ARABIC = { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء', zenith: 'الزوال' };
   var WEEKDAYS = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
   var WD_SHORT = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -111,7 +111,7 @@
     todayKey = PT.dateKey(n);
   }
 
-  /* ближайшее событие: азан, икама или «Читается в мечетях» (сегодня и завтра) */
+  /* ближайшее событие: азан, икама или «Читается в мечети» (сегодня и завтра) */
   function upcoming(n) {
     var list = [];
     [today, tomorrow].forEach(function (day) {
@@ -148,7 +148,7 @@
       $('nextNote').textContent = 'азан был в ' + hm(p.adhan);
     } else if (ev.kind === 'read') {
       var f = prayerOf(ev.day, 'fajr');
-      $('nextLabel').textContent = 'Скоро в мечетях';
+      $('nextLabel').textContent = 'Скоро в мечети';
       $('nextName').textContent = NAMES.read;
       $('nextNote').textContent = 'азан Фаджра в мечети' + (f && f.iqama ? ' · икама ' + hm(f.iqama) : '');
     } else {
@@ -156,7 +156,7 @@
       $('nextName').textContent = NAMES[ev.id] + (ev.day === tomorrow ? ' (завтра)' : '');
       var note = [];
       if (p.iqama && !(ev.id === 'fajr' && ev.day.fajrByRead)) note.push('икама ' + hm(p.iqama));
-      if (ev.id === 'fajr' && ev.day.fajrByRead && ev.day.read) note.push('в мечетях читается в ' + hm(ev.day.read));
+      if (ev.id === 'fajr' && ev.day.fajrByRead && ev.day.read) note.push('в мечети читается в ' + hm(ev.day.read));
       if (ev.id === 'dhuhr' && ev.at.getDay() === 5 && cfg.jumuah.enabled && ev.day.jumuah.length) note.push('сегодня джума');
       $('nextNote').textContent = note.join(' · ');
     }
@@ -475,7 +475,7 @@
   function renderAbout() {
     var meta = today && today.meta ? today.meta.methodName + ', Аср: ' + today.meta.asrName : '';
     var parts = [meta || 'Расчёт по настройкам мечети'];
-    if (cfg.reading && cfg.reading.show) parts.push('«Читается в мечетях» — ' + (today && today.readNote ? today.readNote : 'по настройкам мечети'));
+    if (cfg.reading && cfg.reading.show) parts.push('«Читается в мечети» — ' + (today && today.readNote ? today.readNote : 'по настройкам мечети'));
     parts.push(window.NamazCloud && NamazCloud.ready(cfg.cloud) ? 'Настройки мечети обновляются через интернет.' : 'Время совпадает с табло мечети.');
     $('aboutText').textContent = parts.join('. ').replace(/\.\./g, '.');
   }

@@ -459,7 +459,7 @@
       $('#method').value = d.method;
       $('#asr').value = d.asr;
       $('#customAngles').hidden = cfg.calc.method !== 'custom';
-      /* «Читается в мечетях» — правило мечетей Тюмени; для других городов выключаем */
+      /* «Читается в мечети» — правило мечетей Тюмени; для других городов выключаем */
       cfg.reading.show = c.id === 'tyumen';
       $('#rdShow').checked = cfg.reading.show;
       if (typeof syncReadingFields === 'function') syncReadingFields();
@@ -737,7 +737,7 @@
       });
       var rr = document.createElement('tr');
       var rtxt = s.readHidden ? '—' : (s.read ? PT.fmtHM(s.read) : '—');
-      rr.innerHTML = '<td>Читается в мечетях</td><td>' + rtxt + '</td>' +
+      rr.innerHTML = '<td>Читается в мечети</td><td>' + rtxt + '</td>' +
         '<td><span class="hint">' + (s.readNote || '') + '</span></td>';
       tbody.appendChild(rr);
     }
@@ -748,9 +748,9 @@
 
     var rd = $('#rdPreview');
     if (rd) {
-      if (!cfg.reading.show) rd.textContent = '«Читается в мечетях» выключено.';
+      if (!cfg.reading.show) rd.textContent = '«Читается в мечети» выключено.';
       else if (s.readHidden) rd.textContent = 'Сегодня: — (' + s.readNote + ')';
-      else if (s.read) rd.textContent = 'Сегодня: Читается в мечетях — ' + PT.fmtHM(s.read) + ' (' + s.readNote + ')';
+      else if (s.read) rd.textContent = 'Сегодня: Читается в мечети — ' + PT.fmtHM(s.read) + ' (' + s.readNote + ')';
       else rd.textContent = '';
     }
   }
@@ -769,7 +769,7 @@
     if (!next) { $('#previewNext').textContent = ''; return; }
     var label;
     if (next.kind === 'jumuah') label = next.name;
-    else if (next.kind === 'read') label = 'чтение в мечетях';
+    else if (next.kind === 'read') label = 'чтение в мечети';
     else label = (next.kind === 'iqama' ? 'икама ' : 'азан ') + next.name.toLowerCase();
     $('#previewNext').textContent = 'Следующее событие: ' + label + ' — через ' + PT.fmtDuration(next.at - now.getTime());
     updateAtStatus(now, s);

@@ -2,7 +2,7 @@
  * phone-settings.js — разделы «Настройки» и «Кибла» приложения для телефона.
  *
  * Настройки расписания хранятся так же, как у табло (NamazStore), поэтому
- * город, метод, икама, джума и «Читается в мечетях» считаются одним движком.
+ * город, метод, икама, джума и «Читается в мечети» считаются одним движком.
  * Оформление телефона (тема, цвет, размер текста) — отдельно, только здесь.
  */
 (function () {
@@ -189,7 +189,7 @@
       x.location.lat = lat != null ? lat : c.lat;
       x.location.lng = lng != null ? lng : c.lng;
       if (d) { x.calc.method = d.method; x.calc.asr = d.asr; }
-      /* «Читается в мечетях» — правило мечетей Тюмени; в других городах выключаем (можно включить) */
+      /* «Читается в мечети» — правило мечетей Тюмени; в других городах выключаем (можно включить) */
       x.reading.show = x.location.cityId === 'tyumen';
       if (x.location.cityId === 'tyumen') x.tyumen.useData = true;
     });
@@ -297,7 +297,7 @@
     edit(function (x) { x.jumuah.times.push({ label: (x.jumuah.times.length + 1) + '-я хутба', time: '14:00' }); });
   });
 
-  /* ================= «Читается в мечетях» ================= */
+  /* ================= «Читается в мечети» ================= */
   function bindCheck(id, fn) { $(id).addEventListener('change', function (e) { var v = e.target.checked; edit(function (x) { fn(x, v); }); }); }
   bindCheck('rShow', function (x, v) { x.reading.show = v; });
   bindCheck('rByRead', function (x, v) { x.reading.fajrByRead = v; });

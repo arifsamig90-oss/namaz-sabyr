@@ -69,7 +69,7 @@
     cols.push({ id: 'day', title: 'Дата' });
     cols.push({ id: 'hijri', title: 'Хиджра' });
     cols.push({ id: 'suhoor', title: tyStyle ? 'Завершение сухура' : 'Фаджр' });
-    if (state.showRead) cols.push({ id: 'read', title: 'Читается в мечетях' });
+    if (state.showRead) cols.push({ id: 'read', title: 'Читается в мечети' });
     cols.push({ id: 'sunrise', title: tyStyle ? 'Восход солнца' : 'Восход' });
     if (state.showZenith) cols.push({ id: 'zenith', title: 'Зенит' });
     ['dhuhr', 'asr', 'maghrib', 'isha'].forEach(function (id) {

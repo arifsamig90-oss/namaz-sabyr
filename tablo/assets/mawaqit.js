@@ -188,10 +188,10 @@
       return e.kind !== 'jumuah' || n.getDay() === 5; /* джума — только по пятницам */
     });
     if (schedule && schedule.read && !schedule.readHidden) {
-      events.push({ at: schedule.read.getTime(), kind: 'read', id: 'read', name: 'Читается в мечетях' });
+      events.push({ at: schedule.read.getTime(), kind: 'read', id: 'read', name: 'Читается в мечети' });
     }
     if (tomorrow && tomorrow.read && !tomorrow.readHidden) {
-      events.push({ at: tomorrow.read.getTime(), kind: 'read', id: 'read', name: 'Читается в мечетях', tomorrow: true });
+      events.push({ at: tomorrow.read.getTime(), kind: 'read', id: 'read', name: 'Читается в мечети', tomorrow: true });
     }
     events.sort(function (a, b) { return a.at - b.at; });
     dayKey = PT.dateKey(n);
@@ -330,7 +330,7 @@
 
   function describe(e) {
     if (e.kind === 'iqama') return 'Икама ' + e.name + ' через';
-    if (e.kind === 'read') return 'Чтение в мечетях через';
+    if (e.kind === 'read') return 'Чтение в мечети через';
     if (e.kind === 'jumuah') return 'Джума · ' + e.name + ' через';
     if (e.id === 'sunrise') return 'Восход через';
     return e.name + ' через';
@@ -395,7 +395,7 @@
       $('ovBig').innerHTML = '';
       if (st.type === 'adhan') {
         $('ovAr').textContent = 'الأذان';
-        $('ovTitle').textContent = st.p.mosqueAdhan ? 'Читается в мечетях' : 'Азан';
+        $('ovTitle').textContent = st.p.mosqueAdhan ? 'Читается в мечети' : 'Азан';
         $('ovName').textContent = st.p.mosqueAdhan
           ? 'Азан Фаджра · ' + PT.fmtHM(st.p.mosqueAdhan)
           : st.p.name + ' · ' + PT.fmtHM(st.p.adhan);
@@ -412,7 +412,7 @@
         $('ovNote').textContent = 'Выровняйте ряды · выключите телефоны';
       } else if (st.type === 'read') {
         $('ovAr').textContent = '';
-        $('ovTitle').textContent = 'Читается в мечетях';
+        $('ovTitle').textContent = 'Читается в мечети';
         $('ovName').textContent = PT.fmtHM(schedule.read);
         $('ovNote').textContent = schedule.readNote || '';
       }

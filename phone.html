@@ -22,7 +22,7 @@
     if (window.navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches)) d.classList.add('standalone');
   })(document.documentElement);
 </script>
-<link rel="stylesheet" href="assets/phone.css?v=20261025">
+<link rel="stylesheet" href="assets/phone.css?v=20261112">
 </head>
 <body>
   <div class="ph-bg" aria-hidden="true"></div>
@@ -73,7 +73,7 @@
     <div class="ph-month-wrap">
       <table class="ph-month" id="monthTable"></table>
     </div>
-    <p class="ph-hint">Ч — «Читается в мечетях». Время азана; икама — на вкладке «Сегодня».</p>
+    <p class="ph-hint">Ч — «Читается в мечети». Время азана; икама — на вкладке «Сегодня».</p>
   </main>
 
   <!-- Уведомления -->
@@ -185,7 +185,7 @@
     </section>
 
     <section class="ph-card">
-      <div class="ph-card-title">«Читается в мечетях»</div>
+      <div class="ph-card-title">«Читается в мечети»</div>
       <p class="ph-hint">Так принято в мечетях Тюмени: время утреннего чтения (по умолчанию — за 90 минут до восхода). Азан Фаджра никогда не ставится раньше начала Фаджра.</p>
       <label class="ph-line"><span>Показывать</span>
         <span class="ph-switch"><input type="checkbox" id="rShow"><span></span></span></label>
@@ -253,15 +253,15 @@
   </nav>
 
   <noscript><div style="padding:2rem;text-align:center;color:#fff">Для работы включите JavaScript.</div></noscript>
-  <script src="assets/store.js?v=20261026"></script>
-  <script src="assets/prayer-times.js?v=20261026"></script>
-  <script src="assets/tyumen.js?v=20261026"></script>
-  <script src="assets/schedule.js?v=20261026"></script>
-  <script src="assets/clock-tick.js?v=20261026"></script>
-  <script src="assets/cloud.js?v=20261026"></script>
-  <script src="assets/cities.js?v=20261025"></script>
-  <script src="assets/phone.js?v=20261025"></script>
-  <script src="assets/phone-settings.js?v=20261025"></script>
+  <script src="assets/store.js?v=20261112"></script>
+  <script src="assets/prayer-times.js?v=20261112"></script>
+  <script src="assets/tyumen.js?v=20261112"></script>
+  <script src="assets/schedule.js?v=20261112"></script>
+  <script src="assets/clock-tick.js?v=20261112"></script>
+  <script src="assets/cloud.js?v=20261112"></script>
+  <script src="assets/cities.js?v=20261112"></script>
+  <script src="assets/phone.js?v=20261112"></script>
+  <script src="assets/phone-settings.js?v=20261112"></script>
   <script>
     /* работа без интернета: service worker (только сайт по https, не приложение Android) */
     if ('serviceWorker' in navigator && !window.NamazPhone && (location.protocol === 'https:' || location.hostname === 'localhost')) {

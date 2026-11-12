@@ -77,7 +77,7 @@ for (var i = -1; i < DAYS; i++) {
   });
   if (day.read && !day.readHidden) {
     var f = day.prayers[0];
-    ev('read', day.read, f.iqama, 'Читается в мечетях',
+    ev('read', day.read, f.iqama, 'Читается в мечети',
       day.fajrByRead ? 'Азан Фаджра в мечети · икама ' + hm(f.iqama) : '');
   }
   if (date.getDay() === 5 && cfg.jumuah.enabled && day.jumuah.length) {

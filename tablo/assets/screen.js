@@ -139,13 +139,13 @@
     } else if (cfg.reading.mode === 'suhoor') {
       sub = 'сухур + ' + cfg.reading.nmins + ' мин';
     } else {
-      sub = 'в мечетях';
+      sub = 'в мечети';
     }
     if (!schedule.readHidden && schedule.read) {
       timeText = PT.fmtHM(schedule.read);
     }
     card.innerHTML =
-      '<div class="p-name">Читается в мечетях</div>' +
+      '<div class="p-name">Читается в мечети</div>' +
       '<div class="p-adhan">' + timeText + '</div>' +
       '<div class="p-iqama">' + esc(sub) + '</div>';
     return card;
@@ -244,7 +244,7 @@
     if (!e) return { label: 'Следующее событие', name: '—' };
     if (e.kind === 'iqama') return { label: 'До икамы', name: e.name };
     if (e.kind === 'jumuah') return { label: 'Джума', name: e.name };
-    if (e.kind === 'read') return { label: 'До чтения в мечетях', name: '' };
+    if (e.kind === 'read') return { label: 'До чтения в мечети', name: '' };
     if (e.id === 'sunrise') return { label: 'До восхода', name: 'Восход солнца' };
     return { label: 'До азана', name: e.name };
   }
